@@ -8,7 +8,7 @@ const basicComponents = [
         'component-type': 'section',
         'icon': 'fa-regular fa-square-full',
         'component_description': {
-            'width': '80%',
+            'width': '50%',
             'minHight': '30px', 
             'styles': {
                 'width': '100%'

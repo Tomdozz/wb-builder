@@ -23,13 +23,29 @@ export default {
         },
         minHeight: {
             type: String
+        },
+        posX: {
+            type: String
+        },
+        posY: {
+            type: String
         }
     },
     computed:{
         computedStyle(){
+            console.log('pos X is: ' + this.posX)
+            console.log('pos Y is: ' + this.posY)
+            console.log({
+                height: this.minHeight,
+                width: this.width,
+                top: this.posY + 'px',
+                left: this.posX + 'px'
+            })
             return {
                 height: this.minHeight,
-                width: this.width
+                width: this.width,
+                top: this.posY + 'px',
+                left: this.posX + 'px'
             };
         },
         classData(){
@@ -46,5 +62,6 @@ export default {
 div{
     border: 1px dotted black;
     padding: 3px;
+    position: relative;
 }
 </style>

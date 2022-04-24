@@ -17,11 +17,19 @@ import Vue from 'vue'
 export default {
     methods: {
         onDrop(event){
+            console.log(event)
             const componentId = event.dataTransfer.getData('componentId');
             const component = basicElements.find((item) => item.id == componentId);
             var ComponentClass = Vue.extend(CompEl);
             var mainInstance;
-            
+
+            /*var dropzonePostion = event.target.position();
+            var elementPosition = event.relatedTarget.position();
+            let x = elementPosition.left - dropzonePostion.left;
+            let y = elementPosition.top - dropzonePostion.top;*/
+
+
+
             if (component.component_description){
                 mainInstance = new ComponentClass({
                     propsData: { 
@@ -29,6 +37,9 @@ export default {
                         classes: component.component_description.class,
                         width:  component.component_description.width,
                         height: component.component_description.minHight,
+                        posX: event.offsetX.toString(),
+                        posY: event.offsetY.toString(),
+
                         //minHeight: component.component_description.minHight,
 
                     }
