@@ -27,7 +27,33 @@ export default {
             var elementPosition = event.relatedTarget.position();
             let x = elementPosition.left - dropzonePostion.left;
             let y = elementPosition.top - dropzonePostion.top;*/
+            const dropElementY = event.y;
 
+            const compTables = dropzone.querySelectorAll('.actual-comp');
+
+            if (compTables.length >= 1) {
+                for (i = 0; i < compTables.length; i++) {
+
+                    //loop through each element we added, defining a Y1 
+                    //(top half of the element) and Y2 max height of the element.
+                    const compTablesY1 =
+                        compTables[i].getBoundingClientRect().y +
+                        compTables[i].getBoundingClientRect().height / 2;
+                    const compTablesY2 =
+                        compTables[i].getBoundingClientRect().y +
+                        compTables[i].getBoundingClientRect().height;
+
+                     if (dropElementY <= compTablesY1) {
+                        compTables[i].parentNode.insertBefore(clone, compTables[i]);
+                        break;
+                    }
+                    
+                }
+            // code
+            } else {
+                // No tables yet
+                //appendchild...
+            }
 
 
             if (component.component_description){

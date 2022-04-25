@@ -2,6 +2,7 @@
     <div
         :style="computedStyle"
         :class="classes"
+        class="drop-el"
         ref="container">
     </div>
 </template>
