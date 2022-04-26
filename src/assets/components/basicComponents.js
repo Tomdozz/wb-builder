@@ -8,8 +8,7 @@ const basicComponents = [
         'component-type': 'section',
         'icon': 'fa-regular fa-square-full',
         'component_description': {
-            'width': '50%',
-            'minHight': '30px', 
+            'minHight': '30px',
             'styles': {
                 'width': '100%'
             },
@@ -23,7 +22,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -53,7 +52,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -66,7 +65,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -96,7 +95,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -109,7 +108,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -122,7 +121,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -152,7 +151,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -165,19 +164,19 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
                     'attributes': {},
                 },
-            },{
+            }, {
                 'type': 'single-component',
                 'name': 'div',
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -190,7 +189,7 @@ const basicComponents = [
                 'component-type': 'div',
                 'component_description': {
                     'width': '30px',
-                    'minHight': '30px', 
+                    'minHight': '30px',
                     'styles': {
                         'width': '100%'
                     },
@@ -198,6 +197,24 @@ const basicComponents = [
                 },
             }
         ]
+    },
+
+    {
+        'id': 5,
+        'list': 1,
+        'type': 'section-component',
+        'name': 'section',
+        'component-type': 'section',
+        'icon': 'fa-regular fa-square-full',
+        'component_description': {
+            'width': '100%',
+            'minHight': '100%',
+            'styles': {
+                'width': '100%'
+            },
+            'attributes': {},
+            'class': 'columns'
+        }
     },
     //--Single components--
     {
