@@ -1,14 +1,19 @@
 <template>
-  <div
-    :style="computedStyle"
-    :class="classes"
-    class="drop-el"
-    ref="container"
-    @mousedown="(e) => $emit('activated', id)"
-  ></div>
+  <div>
+    <div
+      :style="computedStyle"
+      :class="classes"
+      class="drop-el"
+      ref="container"
+      @mousedown="(e) => $emit('mousdown', id)"
+      @click="toggleActive"
+    ></div>
+    <Toolbar v-if="active"></Toolbar>
+  </div>
 </template>
 
 <script>
+import Toolbar from "./Toolbar.vue";
 export default {
   data() {
     return {
@@ -55,8 +60,13 @@ export default {
     },
   },
   methods: {
-    toggleActive() {},
+    toggleActive() {
+      console.log("activated: " + this.id);
+      this.active = !this.active;
+      this.$emit("activated", this.id);
+    },
   },
+  components: { Toolbar },
 };
 </script>
 
