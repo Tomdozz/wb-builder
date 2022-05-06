@@ -58,7 +58,6 @@ export default {
 
       mainInstance.$mount();
       mainInstance.$on("activated", (id) => {
-        console.log(id);
         this.activated = id;
       });
 

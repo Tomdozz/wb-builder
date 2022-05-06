@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+    
     <the-header title="Eiron"/>
     <div class="editor-layout">
-      <main-editor/>
+      <!--<main-editor/>-->
+      <main-area></main-area>
       <component-menu/>
         <!--<website-builder/>-->
         
@@ -13,15 +15,17 @@
 
 <script>
 import ComponentMenu from './components/layouts/ComponentMenu.vue'
-import MainEditor from './components/layouts/MainEditor.vue'
+//import MainEditor from './components/layouts/MainEditor.vue'
 import TheHeader from './components/layouts/Header.vue'
+import MainArea from './components/layouts/MainArea.vue'
 
 export default {
   name: 'App',
   components: {
     ComponentMenu,
-    MainEditor,
-    TheHeader
+    //MainEditor,
+    TheHeader,
+    MainArea
   }
 }
 </script>
