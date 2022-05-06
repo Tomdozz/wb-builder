@@ -7,40 +7,38 @@
       @dragenter.prevent
       @dragover.prevent
     >
-        <editor-component 
-      v-for="(component, index) in components" 
-      :key="index"
-      :component="component"
-    ></editor-component>
+      <editor-component
+        v-for="(component, index) in components"
+        :key="index"
+        :component="component"
+      ></editor-component>
     </div>
-
   </div>
 </template>
 
 <script>
-import EditorComponent from "./EditorComponent.vue"
+import EditorComponent from "./EditorComponent.vue";
 import basicElements from "../../assets/components/basicComponents_1.js";
 
-
 export default {
-    components:{
-        EditorComponent
-    },
-    data() {
-      return {
-        components: []
-      }
-    },
-    methods: {
-      onDrop(event){
-        const componentId = event.dataTransfer.getData("componentId");
-        const component = basicElements.find((item) => item.id == componentId);
+  components: {
+    EditorComponent,
+  },
+  data() {
+    return {
+      components: [],
+    };
+  },
+  methods: {
+    onDrop(event) {
+      const componentId = event.dataTransfer.getData("componentId");
+      const component = basicElements.find((item) => item.id == componentId);
 
-    /*  const dropElementY = event.y;
+      const dropElementY = event.y;
       const compTables = this.$refs.container.querySelectorAll(".drop-el");
-      
-        
-        if (compTables.length >= 1) {
+
+      if (compTables.length >= 1) {
+        let added = false;
         for (let i = 0; i < compTables.length; i++) {
           const compTablesY1 =
             compTables[i].getBoundingClientRect().y +
@@ -49,33 +47,29 @@ export default {
             compTables[i].getBoundingClientRect().y +
             compTables[i].getBoundingClientRect().height;
 
+          //insert above
           if (dropElementY <= compTablesY1) {
-            compTables[i].parentNode.insertBefore(
-              mainInstance.$el,
-              compTables[i]
-            );
+            this.components.splice(i, 0, component);
+            added = true;
             break;
           }
 
+          //insert below
           if (dropElementY <= compTablesY2) {
-            compTables[i].parentNode.insertBefore(
-              mainInstance.$el,
-              compTables[i].nextSibling
-            );
+            this.components.splice(i + 1, 0, component);
+            added = true;
             break;
           }
-
-          this.$refs.container.appendChild(mainInstance.$el);
+        }
+        if (!added) {
+          this.components.push(component);
         }
       } else {
-        this.$refs.container.appendChild(mainInstance.$el);
-      }*/
-        
         this.components.push(component);
-        console.log(this.components); 
       }
-   }
-}
+    },
+  },
+};
 </script>
 <style scoped>
 .main-editor {

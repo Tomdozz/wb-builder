@@ -19,6 +19,7 @@ export default {};
 <style scoped>
 .tools {
   position: relative;
+  top: 0;
   left: 50%; /* position the left edge of the element at the middle of the parent */
 
   transform: translate(0%, -50%);

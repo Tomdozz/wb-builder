@@ -8,9 +8,10 @@
       @mousedown="(e) => $emit('mousdown', id)"
       @click="toggleActive"
     >
+      <Toolbar v-if="active"></Toolbar>
+
       <slot></slot>
     </div>
-    <Toolbar v-if="active"></Toolbar>
   </div>
 </template>
 
