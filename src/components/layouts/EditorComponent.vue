@@ -12,7 +12,7 @@ export default {
       BaseComp,
       {
         props: {
-          height: this.component.pops.minHight,
+          initialHeigt: this.component.pops.minHight,
         },
       },
       [createElement(this.component.type, {}, this.component.name)]

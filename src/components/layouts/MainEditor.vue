@@ -1,5 +1,5 @@
 <template>
-  <div class="main-editor">
+  <div class="main-editor" id="main-zone">
     <div
       class="drop-zone"
       ref="container"

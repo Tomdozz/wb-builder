@@ -8,7 +8,7 @@ const basicComponents = [
         'class': 'columns',
         'pops': {
             'styles': {},
-            'minHight': '30px',
+            'minHight': 30,
             'width': '100%'
         },
         'childs': [
@@ -24,7 +24,7 @@ const basicComponents = [
         'class': 'columns',
         'pops': {
             'styles': {},
-            'minHight': '30px',
+            'minHight': 30,
             'width': '100%'
         },
         'childs': [
@@ -40,7 +40,7 @@ const basicComponents = [
         'class': 'columns',
         'pops': {
             'styles': {},
-            'minHight': '30px',
+            'minHight': 30,
             'width': '100%'
         },
         'childs': [
