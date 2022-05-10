@@ -1,40 +1,37 @@
 <template>
   <div id="app">
-    
-    <the-header title="Eiron"/>
+    <the-header title="wap" />
     <div class="editor-layout">
       <!--<main-editor/>-->
       <main-area></main-area>
-      <component-menu/>
-        <!--<website-builder/>-->
-        
+      <component-menu />
+      <!--<website-builder/>-->
     </div>
-
   </div>
 </template>
 
 <script>
-import ComponentMenu from './components/layouts/ComponentMenu.vue'
+import ComponentMenu from "./components/layouts/ComponentMenu.vue";
 //import MainEditor from './components/layouts/MainEditor.vue'
-import TheHeader from './components/layouts/Header.vue'
-import MainArea from './components/layouts/MainArea.vue'
+import TheHeader from "./components/layouts/Header.vue";
+import MainArea from "./components/layouts/MainArea.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     ComponentMenu,
     //MainEditor,
     TheHeader,
-    MainArea
-  }
-}
+    MainArea,
+  },
+};
 </script>
 
 <style>
-.editor-layout{
+.editor-layout {
   display: flex;
 }
-body{
+body {
   margin: 0px;
 }
 #app {
@@ -44,6 +41,5 @@ body{
   text-align: center;
   color: #2c3e50;
   background-color: rgb(224, 224, 224);
-
 }
 </style>

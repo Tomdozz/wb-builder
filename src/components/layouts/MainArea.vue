@@ -8,9 +8,10 @@
       @dragover.prevent
     >
       <editor-component
-        v-for="(component, index) in components"
-        :key="index"
+        v-for="component in components"
+        :key="component.uid"
         :component="component"
+        @activated="setActive"
       ></editor-component>
     </div>
   </div>
@@ -27,13 +28,38 @@ export default {
   data() {
     return {
       components: [],
+      activeComponent: "",
+    };
+  },
+  provide() {
+    return {
+      getActive: () => this.activeComponent,
     };
   },
   methods: {
+    setActive(id) {
+      const comparelist = this.components;
+      if (this.activeComponent == id) {
+        return;
+      }
+      if (this.activeComponent != "") {
+        const current = comparelist.findIndex(
+          (item) => item.uid == this.activeComponent
+        );
+        comparelist[current].active = false;
+      }
+
+      const newActive = comparelist.findIndex((item) => item.uid == id);
+
+      comparelist[newActive].active = true;
+      this.activeComponent = id;
+      this.components = comparelist;
+    },
     onDrop(event) {
       const componentId = event.dataTransfer.getData("componentId");
       const component = basicElements.find((item) => item.id == componentId);
-
+      component.active = false;
+      component.uid = Math.random().toString(16).slice(2);
       const dropElementY = event.y;
       const compTables = this.$refs.container.querySelectorAll(".drop-el");
 

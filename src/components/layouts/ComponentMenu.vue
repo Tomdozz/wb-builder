@@ -65,8 +65,6 @@ export default {
     startDrag(event, component) {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
-      console.log(component);
-      console.log(component.id);
       event.dataTransfer.setData("componentId", component.id);
     },
     toggleMenu(list) {

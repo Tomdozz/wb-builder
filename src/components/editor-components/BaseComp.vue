@@ -9,7 +9,7 @@
       @click="toggleActive"
     >
       <slot></slot>
-      <div class="resizers">
+      <div v-if="activated" class="resizers">
         <div
           @mousedown="initResize($event, 'tl')"
           class="resizer top-left"
@@ -27,13 +27,6 @@
           class="resizer bottom-right"
         ></div>
       </div>
-      <!--<div
-        v-if="active"
-        class="handles"
-        id="handle"
-        @mousedown="captureMouse"
-        @mouseup="mouseUp"
-      ></div>-->
     </div>
     <Toolbar v-if="active"></Toolbar>
   </div>
@@ -42,11 +35,15 @@
 <script>
 import Toolbar from "./Toolbar.vue";
 export default {
+  inject: ["getActive"],
   data() {
     return {
-      active: false,
+      active: this.isActive,
       mouseY: 0,
       height: this.initialHeigt,
+      width: this.initWidth,
+      left: 0,
+      top: 0,
       isMoving: false,
 
       minimum_size: 20,
@@ -70,7 +67,7 @@ export default {
     classes: {
       type: String,
     },
-    width: {
+    initWidth: {
       type: Number,
     },
     initialHeigt: {
@@ -85,8 +82,15 @@ export default {
     posY: {
       type: String,
     },
+    isActive: {
+      type: Boolean,
+    },
   },
+
   computed: {
+    activated() {
+      return this.id == this.getActive();
+    },
     computedStyle() {
       return {
         height: this.height + "px",
@@ -101,12 +105,9 @@ export default {
   },
   methods: {
     toggleActive() {
-      this.active = !this.active;
+      this.$parent.$emit("activated", this.id);
     },
     initResize(e, currentresiser) {
-      console.log(e);
-      console.log(this.$refs.container.getBoundingClientRect());
-
       this.original_height = this.height;
       this.currentresiser = currentresiser;
 
@@ -115,13 +116,10 @@ export default {
       this.original_mouse_x = e.pageX;
       this.original_mouse_y = e.pageY;
 
-      console.log(this.original_mouse_y);
-
       window.addEventListener("mousemove", this.resizer);
       window.addEventListener("mouseup", this.stopResize);
     },
     resizer(e) {
-      console.log(e);
       if (this.disableWidthResizer) {
         if (this.currentresiser === "bl" || this.currentresiser === "br") {
           const width = this.original_width + (e.pageX - this.original_mouse_x);
@@ -135,7 +133,51 @@ export default {
           }
         }
       } else {
-        //logic for all sizers
+        if (this.currentresiser === "br") {
+          const width = this.original_width + (e.pageX - this.original_mouse_x);
+          const height =
+            this.original_height + (e.pageY - this.original_mouse_y);
+          if (width > this.minimum_size) {
+            this.width = width;
+          }
+          if (height > this.minimum_size) {
+            this.height = height;
+          }
+        } else if (this.currentresiser === "bl") {
+          const width = this.original_width + (e.pageX - this.original_mouse_x);
+          const height =
+            this.original_height + (e.pageY - this.original_mouse_y);
+          if (width > this.minimum_size) {
+            this.width = width;
+            this.left = this.original_x + (e.pageX - this.original_mouse_x);
+          }
+          if (height > this.minimum_size) {
+            this.height = height;
+          }
+        } else if (this.currentresiser === "tr") {
+          const width = this.original_width + (e.pageX - this.original_mouse_x);
+          const height =
+            this.original_height + (e.pageY - this.original_mouse_y);
+          if (width > this.minimum_size) {
+            this.width = width;
+          }
+          if (height > this.minimum_size) {
+            this.height = height;
+            this.top = this.original_y + (e.pagey - this.original_mouse_y);
+          }
+        } else {
+          const width = this.original_width + (e.pageX - this.original_mouse_x);
+          const height =
+            this.original_height + (e.pageY - this.original_mouse_y);
+          if (width > this.minimum_size) {
+            this.width = width;
+            this.left = this.original_x + (e.pageX - this.original_mouse_x);
+          }
+          if (height > this.minimum_size) {
+            this.height = height;
+            this.top = this.original_y + (e.pagey - this.original_mouse_y);
+          }
+        }
       }
     },
     stopResize() {
@@ -176,9 +218,9 @@ export default {
 .resizers .resizer {
   width: 10px;
   height: 10px;
-  border-radius: 50%; /*magic to turn square into circle*/
+  border-radius: 50%;
   background: white;
-  border: 3px solid #4286f4;
+  border: 3px solid #00ff3c;
   position: absolute;
 }
 
