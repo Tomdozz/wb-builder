@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       components: [],
+      componetIds: [],
       activeComponent: "",
     };
   },
@@ -38,7 +39,10 @@ export default {
   },
   methods: {
     setActive(id) {
-      const comparelist = this.components;
+
+      this.activeComponent = id;
+
+      /*const comparelist = this.components;
       if (this.activeComponent == id) {
         return;
       }
@@ -49,22 +53,30 @@ export default {
         comparelist[current].active = false;
       }
 
+
+
       const newActive = comparelist.findIndex((item) => item.uid == id);
 
       comparelist[newActive].active = true;
       this.activeComponent = id;
-      this.components = comparelist;
+      this.components = comparelist;*/
     },
     onDrop(event) {
+      let compId;
       const componentId = event.dataTransfer.getData("componentId");
       const component = basicElements.find((item) => item.id == componentId);
       component.active = false;
-      component.uid = Math.random().toString(16).slice(2);
-      console.log(component.childs);
+      compId = Math.random().toString(16).slice(2);
+      component.uid = compId;
+      this.componetIds.push(compId)
       if (component.childs) {
         component.childs.forEach((child) => {
           child.active = false;
-          child.uid = Math.random().toString(16).slice(2);
+          compId = Math.random().toString(16).slice(2);
+
+          child.uid = compId;
+          this.componetIds.push(compId)
+
         });
       }
 

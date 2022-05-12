@@ -6,7 +6,7 @@
       class="drop-el"
       ref="container"
       @mousedown="(e) => $emit('mousdown', id)"
-      @click="toggleActive"
+      @click.self="toggleActive"
     >
       <slot></slot>
       <div v-if="activated" class="resizers">
@@ -108,6 +108,7 @@ export default {
   },
   methods: {
     toggleActive() {
+      console.log('clicked' + this.id)
       this.$parent.$emit("activated", this.id);
     },
     initResize(e, currentresiser) {
