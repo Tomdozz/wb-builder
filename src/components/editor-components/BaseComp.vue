@@ -28,7 +28,7 @@
         ></div>
       </div>
     </div>
-    <Toolbar v-if="active"></Toolbar>
+    <Toolbar v-if="activated"></Toolbar>
   </div>
 </template>
 
@@ -88,6 +88,9 @@ export default {
   },
 
   computed: {
+    /*anti pattern but it works
+    It seems like there was an issue passing data from grandparent
+    without this hack with provide/inject*/
     activated() {
       return this.id == this.getActive();
     },
@@ -195,6 +198,7 @@ export default {
 .drop-el {
   border: 1px dotted black;
   position: relative;
+  padding: 5px;
 }
 .wrapper {
   position: relative;

@@ -12,7 +12,27 @@ export default {
     },
   },
   render(createElement) {
-    console.log(this.componentData.active);
+    let childs = [];
+
+    console.log(this.componentData.childs);
+    if (this.componentData.childs) {
+      this.componentData.childs.forEach((element) => {
+        let c = createElement(
+          BaseComp,
+          {
+            props: {
+              initialHeigt: element.pops.minHight,
+              id: element.uid,
+              isActive: element.active,
+            },
+          },
+          [createElement(element.type, {}, element.name)]
+        );
+        childs.push(c);
+        console.log(childs);
+      });
+    }
+
     let elem = createElement(
       BaseComp,
       {
@@ -22,7 +42,7 @@ export default {
           isActive: this.componentData.active,
         },
       },
-      [createElement(this.componentData.type, {}, this.componentData.name)]
+      [createElement(this.componentData.type, {}, childs)]
     );
     return elem;
   },

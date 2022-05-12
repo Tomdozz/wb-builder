@@ -60,6 +60,14 @@ export default {
       const component = basicElements.find((item) => item.id == componentId);
       component.active = false;
       component.uid = Math.random().toString(16).slice(2);
+      console.log(component.childs);
+      if (component.childs) {
+        component.childs.forEach((child) => {
+          child.active = false;
+          child.uid = Math.random().toString(16).slice(2);
+        });
+      }
+
       const dropElementY = event.y;
       const compTables = this.$refs.container.querySelectorAll(".drop-el");
 

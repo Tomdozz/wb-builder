@@ -12,7 +12,16 @@ const basicComponents = [
             'width': '100%'
         },
         'childs': [
-            {},
+            {
+                'id': 11,
+                'type': 'div',
+                'name': 'child 1',
+                'pops': {
+                    'styles': {},
+                    'minHight': 30,
+                    'width': '80%'
+                },
+            },
         ]
     },
     {
@@ -24,11 +33,30 @@ const basicComponents = [
         'class': 'columns',
         'pops': {
             'styles': {},
-            'minHight': 30,
+            'minHight': 80,
             'width': '100%'
         },
         'childs': [
-            {},
+            {
+                'id': 21,
+                'type': 'div',
+                'name': 'child 1',
+                'pops': {
+                    'styles': {},
+                    'minHight': 30,
+                    'width': '80%'
+                },
+            },
+            {
+                'id': 22,
+                'type': 'div',
+                'name': 'child 2',
+                'pops': {
+                    'styles': {},
+                    'minHight': 30,
+                    'width': '80%'
+                },
+            },
         ]
     },
     {
@@ -43,9 +71,7 @@ const basicComponents = [
             'minHight': 30,
             'width': '100%'
         },
-        'childs': [
-            {},
-        ]
+
     },
 ]
 
