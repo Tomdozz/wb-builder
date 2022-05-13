@@ -6,10 +6,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 //import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
+import { createPinia } from 'pinia'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.use(VueCompositionAPI)
+Vue.use(createPinia());
 
 library.add(fas, far)
 
