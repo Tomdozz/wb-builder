@@ -1,4 +1,4 @@
-# wb_1
+# wb-builder-vue3
 
 ## Project setup
 ```

@@ -34,7 +34,21 @@
 
 <script>
 import Toolbar from "./Toolbar.vue";
+import {useComponentStore} from "../../store/useComponent"
+import { storeToRefs } from 'pinia'
+//import { mapState } from 'pinia'
+
+
 export default {
+    setup() {
+    const store = useComponentStore();
+    const {currentelement} = storeToRefs(store)
+
+    return {
+      currentelement,
+      store
+    }
+  },
   inject: ["getActive"],
   data() {
     return {
@@ -88,11 +102,10 @@ export default {
   },
 
   computed: {
-    /*anti pattern but it works
-    It seems like there was an issue passing data from grandparent
-    without this hack with provide/inject*/
+    // ...mapState(useComponentStore(), ['currentelement']),
     activated() {
-      return this.id == this.getActive();
+     
+      return this.id == this.currentelement;
     },
     computedStyle() {
       return {
@@ -108,8 +121,9 @@ export default {
   },
   methods: {
     toggleActive() {
-      console.log('clicked' + this.id)
-      this.$parent.$emit("activated", this.id);
+      this.store.setNewActive(this.id);
+      //console.log('clicked' + this.id)
+      //this.$parent.$emit("activated", this.id);
     },
     initResize(e, currentresiser) {
       this.original_height = this.height;

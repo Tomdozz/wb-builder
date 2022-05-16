@@ -11,8 +11,8 @@
         v-for="component in components"
         :key="component.uid"
         :component="component"
-        @activated="setActive"
       ></editor-component>
+      <h1>{{ currentelement }}</h1>
     </div>
   </div>
 </template>
@@ -20,8 +20,20 @@
 <script>
 import EditorComponent from "./EditorComponent.vue";
 import basicElements from "../../assets/components/basicComponents_1.js";
+import {useComponentStore} from "../../store/useComponent"
+import { storeToRefs } from 'pinia'
+
 
 export default {
+  setup() {
+    const store = useComponentStore();
+    const {currentelement} = storeToRefs(store)
+
+    return {
+      currentelement,
+      store
+    }
+  },
   components: {
     EditorComponent,
   },
@@ -39,7 +51,6 @@ export default {
   },
   methods: {
     setActive(id) {
-
       this.activeComponent = id;
 
       /*const comparelist = this.components;

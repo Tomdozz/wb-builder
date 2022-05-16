@@ -3,7 +3,7 @@
     <div class="sub-menu-wrapper">
       <div class="sub-menu-toggle" @click="toggleMenu(1)">
         <span>Sections</span>
-        <p><font-awesome-icon icon="list" /></p>
+        <!--<p><font-awesome-icon icon="list" /></p>-->
       </div>
       <div class="menu">
         <div
@@ -13,7 +13,7 @@
           draggable="true"
           @dragstart="startDrag($event, el)"
         >
-          <p><font-awesome-icon :icon="el.icon" /></p>
+          <!--<p><font-awesome-icon :icon="el.icon" /></p>-->
           <span>{{ el.name }}</span>
         </div>
       </div>
@@ -21,7 +21,7 @@
     <div class="sub-menu-wrapper">
       <div class="sub-menu-toggle" @click="toggleMenu(2)">
         <span>Elemnts</span>
-        <p><font-awesome-icon icon="list" /></p>
+        <!--<p><font-awesome-icon icon="list" /></p>-->
       </div>
       <div class="menu">
         <div
@@ -31,7 +31,7 @@
           draggable="true"
           @dragstart="startDrag($event, el)"
         >
-          <p><font-awesome-icon :icon="el.icon" /></p>
+          <!--<p><font-awesome-icon :icon="el.icon" /></p>-->
           <span>{{ el.name }}</span>
         </div>
       </div>
@@ -50,6 +50,7 @@ export default {
     };
   },
   mounted() {
+    console.log(basicElements)
     //fix this
     basicElements.forEach((e) => {
       this.activeList.push({

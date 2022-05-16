@@ -1,5 +1,7 @@
 <script>
 import BaseComp from "../editor-components/BaseComp.vue";
+import { h } from 'vue'
+
 export default {
   data() {
     return {
@@ -11,38 +13,34 @@ export default {
       type: void 0,
     },
   },
-  render(createElement) {
+  render() {
     let childs = [];
 
     console.log(this.componentData.childs);
     if (this.componentData.childs) {
       this.componentData.childs.forEach((element) => {
-        let c = createElement(
+        let c = h(
           BaseComp,
-          {
-            props: {
+           {
               initialHeigt: element.pops.minHight,
               id: element.uid,
               isActive: element.active,
-            },
           },
-          [createElement(element.type, {}, element.name)]
+          [h(element.type, {}, element.name)]
         );
         childs.push(c);
         console.log(childs);
       });
     }
 
-    let elem = createElement(
+    let elem = h(
       BaseComp,
       {
-        props: {
           initialHeigt: this.componentData.pops.minHight,
           id: this.componentData.uid,
           isActive: this.componentData.active,
-        },
       },
-      [createElement(this.componentData.type, {}, childs)]
+      [h(this.componentData.type, {}, childs)]
     );
     return elem;
   },

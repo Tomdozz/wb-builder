@@ -11,20 +11,18 @@
 </template>
 
 <script>
-import ComponentMenu from "./components/layouts/ComponentMenu.vue";
-//import MainEditor from './components/layouts/MainEditor.vue'
+import ComponentMenu from "./components/layouts/ComponentMenu.vue"
 import TheHeader from "./components/layouts/Header.vue";
 import MainArea from "./components/layouts/MainArea.vue";
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     ComponentMenu,
-    //MainEditor,
     TheHeader,
     MainArea,
-  },
-};
+  }
+}
 </script>
 
 <style>
@@ -40,6 +38,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: rgb(224, 224, 224);
+  margin-top: 60px;
 }
 </style>
