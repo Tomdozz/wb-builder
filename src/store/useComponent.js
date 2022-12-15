@@ -2,11 +2,19 @@ import { defineStore } from "pinia";
 
 export const useComponentStore = defineStore("main", {
     state: () => ({
-        currentelement: 'test'
+        currentelement: 'test',
+        componentList: [],
+        dropElement: {}
     }),
     getters: {
         getCurrentAsString: state => {
             state.currentelement.toString();
+        },
+        getComponentList: state => {
+            state.componentList; 
+        },
+        getDropElement: state => {
+            state.dropElement; 
         }
     },
     actions: {
@@ -15,6 +23,15 @@ export const useComponentStore = defineStore("main", {
         },
         setNewActive(val){
             this.currentelement = val;
+        },
+        resetComponentList(){
+            this.currentelement = [];
+        },
+        setComponentList(val){
+            this.componentList = val;
+        },
+        setDropElement(val){
+            this.dropElement = val;
         }
     }
 })

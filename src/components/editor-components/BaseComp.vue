@@ -68,7 +68,7 @@ export default {
       original_mouse_x: 0,
       original_mouse_y: 0,
       currentresiser: "",
-      disableWidthResizer: true,
+      disableWidthResizer: !this.fullyResizable,
     };
   },
   props: {
@@ -99,6 +99,9 @@ export default {
     isActive: {
       type: Boolean,
     },
+    fullyResizable: {
+      type: Boolean
+    }
   },
 
   computed: {
@@ -111,8 +114,9 @@ export default {
       return {
         height: this.height + "px",
         width: this.width + "px",
-        top: this.posY + "px",
-        left: this.posX + "px",
+        top: this.top + "px",
+        left: this.left + "px",
+        position: this.fullyResizable ? 'absolute' : 'relative'
       };
     },
     classData() {
@@ -162,9 +166,8 @@ export default {
             this.height = height;
           }
         } else if (this.currentresiser === "bl") {
-          const width = this.original_width + (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height + (e.pageY - this.original_mouse_y);
+          const width = this.original_width - (e.pageX - this.original_mouse_x);
+          const height = this.original_height + (e.pageY - this.original_mouse_y);
           if (width > this.minimum_size) {
             this.width = width;
             this.left = this.original_x + (e.pageX - this.original_mouse_x);
@@ -174,8 +177,7 @@ export default {
           }
         } else if (this.currentresiser === "tr") {
           const width = this.original_width + (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height + (e.pageY - this.original_mouse_y);
+          const height = this.original_height - (e.pageY - this.original_mouse_y);
           if (width > this.minimum_size) {
             this.width = width;
           }
@@ -184,9 +186,8 @@ export default {
             this.top = this.original_y + (e.pagey - this.original_mouse_y);
           }
         } else {
-          const width = this.original_width + (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height + (e.pageY - this.original_mouse_y);
+          const width = this.original_width - (e.pageX - this.original_mouse_x);
+          const height = this.original_height - (e.pageY - this.original_mouse_y);
           if (width > this.minimum_size) {
             this.width = width;
             this.left = this.original_x + (e.pageX - this.original_mouse_x);

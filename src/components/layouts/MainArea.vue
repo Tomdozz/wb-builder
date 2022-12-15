@@ -11,6 +11,7 @@
         v-for="component in components"
         :key="component.uid"
         :component="component"
+        @add-sub="fromSub"
       ></editor-component>
       <h1>{{ currentelement }}</h1>
     </div>
@@ -20,22 +21,34 @@
 <script>
 import EditorComponent from "./EditorComponent.vue";
 import basicElements from "../../assets/components/basicComponents_1.js";
-import {useComponentStore} from "../../store/useComponent"
-import { storeToRefs } from 'pinia'
-
+import { useComponentStore } from "../../store/useComponent";
+import { storeToRefs } from "pinia";
 
 export default {
   setup() {
     const store = useComponentStore();
-    const {currentelement} = storeToRefs(store)
+    const { currentelement, dropElement } = storeToRefs(store);
+    //let currentDrop = null;
+
+    /*store.$subscribe((mutation, state) =>{
+      //currentDrop = state.dropElement;
+      console.log(mutation, state);
+    } )*/
 
     return {
       currentelement,
-      store
-    }
+      store,
+      dropElement,
+      //currentDrop
+    };
   },
   components: {
     EditorComponent,
+  },
+  watch: {
+    dropElement(newval, oldval) {
+      console.log("newval is: " + newval + " : " + "oldval is: " + oldval);
+    },
   },
   data() {
     return {
@@ -50,6 +63,9 @@ export default {
     };
   },
   methods: {
+    fromSub(data) {
+      console.log("data from sub is: " + data);
+    },
     setActive(id) {
       this.activeComponent = id;
 
@@ -75,24 +91,37 @@ export default {
     onDrop(event) {
       let compId;
       const componentId = event.dataTransfer.getData("componentId");
+      console.log(event);
       const component = basicElements.find((item) => item.id == componentId);
       component.active = false;
       compId = Math.random().toString(16).slice(2);
       component.uid = compId;
-      this.componetIds.push(compId)
+      this.componetIds.push(compId);
+
+      if (component.isLayout) {
+        console.log("islayout");
+        component.grid.forEach((cell) => {
+          console.log(cell)
+          cell.active = false;
+          compId = Math.random().toString(16).slice(2);
+
+          cell.uid = compId;
+          this.componetIds.push(compId);
+        });
+      }
+
       if (component.childs) {
         component.childs.forEach((child) => {
           child.active = false;
           compId = Math.random().toString(16).slice(2);
 
           child.uid = compId;
-          this.componetIds.push(compId)
-
+          this.componetIds.push(compId);
         });
       }
 
       const dropElementY = event.y;
-      const compTables = this.$refs.container.querySelectorAll(".drop-el");
+      const compTables = this.$refs.container.querySelectorAll(".drop-el"); //might need to take this list from state
 
       if (compTables.length >= 1) {
         let added = false;
@@ -124,6 +153,9 @@ export default {
       } else {
         this.components.push(component);
       }
+
+      this.store.resetComponentList();
+      this.store.setComponentList(this.components);
     },
   },
 };
