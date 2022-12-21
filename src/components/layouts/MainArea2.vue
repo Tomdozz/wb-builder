@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import EditorComponent from "./EditorComponent.vue";
-import basicElements from "../../assets/components/basicComponents_1.js";
+import EditorComponent from "./EditorComponent2.vue";
+import basicElements from "../../assets/components/componentList.js";
 import { useComponentStore } from "../../store/useComponent";
 import { storeToRefs } from "pinia";
 
@@ -66,7 +66,6 @@ export default {
       components: [],
       componetIds: [],
       activeComponent: "",
-      
     };
   },
   provide() {
@@ -94,7 +93,7 @@ export default {
 
       if (data.parentId) {
         const parent = this.store.getComponentList().find((item) => {
-          item.uid == data.parentId
+          item.uid == data.parentId;
         });
         console.log(parent.uid);
       }
@@ -156,16 +155,115 @@ export default {
       this.store.resetComponentList();
       this.store.setComponentList(this.components);
     },
+    searchComponentTree(element, id) {
+      if (element.uid === id) {
+        return element;
+      } else if (element.components) {
+        var result = null;
+        element.components.forEach((c) => {
+          result = this.searchComponentTree(c, id);
+        });
+        return result;
+      }
+      return null;
+    },
+    getNestedElement(comp) {
+      let nested = this.createElement(comp);
+      if (comp.components) {
+        comp.components.forEach((c) => {
+          nested.components.push(this.getNestedElement(c))
+          //nested.components = this.getNestedElement(c);
+        });
+      }
+      return nested;
+    },
+    addElem(comp, to) {
+      //let element = this.createElement(comp);
+      //element.components = this.getNestedElement(comp);
+      let ele = this.getNestedElement(comp);
+      
+      if (to === "-1") {
+        this.components.push(ele);
+      } else {
+        var addTo = this.searchComponentTree(ele, to);
+        if (addTo != null) {
+          addTo.components.push(ele);
+        } else {
+          console.log("could not find the element");
+          //this.components.push(element);
+        }
+      }
 
+      /*this.components.forEach((c) => {
+        if(c.uid === to){
+          c.components.push(element);
+          return;
+        }
+      })*/
+    },
+    createElement(data) {
+      return {
+        name: data.name,
+        classes: data.classes,
+        uid: Math.random().toString(16).slice(2),
+        active: false,
+        type: data.type,
+        components: [],
+      };
+    },
+    onDropNested(data) {
+      const componentDescription = basicElements.find(
+        (item) => item.id == data.omponentId
+      );
+      const componentListDescription = componentDescription;
+      if (componentListDescription.components) {
+        componentListDescription.components.forEach((c) => {
+          this.addElem(c, data.parentId);
+        });
+      }
+      //var element = this.createElement(componentListDescription);
+    },
     onDrop(event) {
-      let compId;
+      //let compId;
       const componentId = event.dataTransfer.getData("componentId");
-      const component = basicElements.find((item) => item.id == componentId);
+      const componentDescription = basicElements.find(
+        (item) => item.id == componentId
+      );
+      const componentListDescription = componentDescription;
 
-      component.active = false;
+      //add last in all components
+      /*var element = this.createElement(componentListDescription);
+      this.components.push(element);
+      let compId = element.uid;*/
 
+      if (componentListDescription.components) {
+        componentListDescription.components.forEach((c) => {
+          this.addElem(c, "-1");
+        });
+      }
+
+      /*if(this.components.length == 0){
+              compId = Math.random().toString(16).slice(2);
+              this.createRootElement();
+
+      }
+
+
+      component.components.forEach((comp) => {
+        this.components = this.add(comp);
+      });*/
+      //console.log(this.add(component, this.components));
+      console.log(this.components);
+      //this.components = this.recursion(component);
+      /*this.components.forEach((c) => {
+        console.log(c);
+      });*/
+      //console.log(this.components);
+      /*component.active = false;
       compId = Math.random().toString(16).slice(2);
       component.uid = compId;
+      
+      
       this.componetIds.push(compId);
 
       if (component.isLayout) {
@@ -223,7 +321,7 @@ export default {
       }
 
       this.store.resetComponentList();
-      this.store.setComponentList(this.components);
+      this.store.setComponentList(this.components);*/
     },
   },
 };

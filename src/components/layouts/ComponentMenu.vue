@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import basicElements from "../../assets/components/basicComponents_1.js";
+import basicElements from "../../assets/components/componentList.js";
 
 export default {
   data() {

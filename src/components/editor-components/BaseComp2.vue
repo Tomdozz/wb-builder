@@ -1,17 +1,13 @@
 <template>
-  <div class="wrapper">
-    <!--This wrapper  needs to go-->
-    <!--Controlls needs to be mpved to some othe component-->
-
-    <div
+    <slot></slot>
+    <!--Now add controls that are same size as slot-->
+    <!--<div
       :style="computedStyle"
-      :class="classes"
       class="drop-el"
       ref="container"
       @mousedown="(e) => $emit('mousdown', id)"
       @click.self="toggleActive"
     >
-      <slot></slot>
       <div v-if="activated" class="resizers">
         <div
           @mousedown="initResize($event, 'tl')"
@@ -30,9 +26,8 @@
           class="resizer bottom-right"
         ></div>
       </div>
-    </div>
+    </div>-->
     <Toolbar v-if="activated"></Toolbar>
-  </div>
 </template>
 
 <script>

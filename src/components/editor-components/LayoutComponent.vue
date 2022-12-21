@@ -1,10 +1,11 @@
 <template>
-  <div class="fixed" @click.self="toggleActive">pooop</div>
+  <!--<div class="fixed" @click.self="toggleActive">pooop</div>-->
   <div
     class="container"
     @drop="onDrop($event, this)"
     @dragenter.prevent
     @dragover.prevent
+    :class="foundation"
   >
     <slot></slot>
   </div>
@@ -30,6 +31,14 @@ export default {
     },
     parentId: {
       type: String
+    },
+    foundationClass: {
+      type: String
+    }
+  },
+  computed: {
+    foundation(){
+      return this.foundationClass;
     }
   },
   methods: {
@@ -38,11 +47,15 @@ export default {
       console.log("clicked: " + this.id);
     },
     onDrop(event,target) {
-      console.log(this.id);
-      console.log(target.id);
-      this.store.setDropElement({
+      //const componentID = event.dataTransfer.getData("componentId");
+      console.log({
         componentId: event.dataTransfer.getData("componentId"),
         id: this.id,
+        parentId: target.id
+      });
+      console.log('traget id is ' + target.id);
+      this.store.setDropElement({
+        componentId: event.dataTransfer.getData("componentId"),
         parentId: target.id
       });
     },
@@ -54,7 +67,5 @@ export default {
 .fixed {
   position: absolute;
 }
-.container {
-  width: 100%;
-}
+
 </style>

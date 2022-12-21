@@ -90,7 +90,7 @@ const basicComponents = [
                 'childs': [
                     {
                         'type': 'div',
-                        'foundation': 'cell medium-6 large-4'
+                        'foundation': 'cell medium-6 large-8'
                     },
                     {
                         'type': 'div',

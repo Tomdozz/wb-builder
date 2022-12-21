@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <the-header title="wap" />
+    <the-header title="wap wap wap wap" />
     <div class="editor-layout">
       <!--<main-editor/>-->
       <main-area></main-area>
@@ -13,7 +13,7 @@
 <script>
 import ComponentMenu from "./components/layouts/ComponentMenu.vue"
 import TheHeader from "./components/layouts/Header.vue";
-import MainArea from "./components/layouts/MainArea.vue";
+import MainArea from "./components/layouts/MainArea2.vue";
 
 export default {
   name: 'App',

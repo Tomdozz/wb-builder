@@ -47,6 +47,8 @@ export default {
                 LayoutComponent,
                 {
                   id: elem.uid,
+                  foundationClass: child.foundation,
+                  parentId: this.componentData.uid,
                 },
                 [
                   h(
