@@ -47,6 +47,7 @@ export default {
   },
   watch: {
     dropElement(newval, oldval) {
+      //next step is to add component, to nested element
       console.log(
         "newval id is: " +
           newval.componentId +
@@ -80,81 +81,6 @@ export default {
     setActive(id) {
       this.activeComponent = id;
     },
-    addElement(data) {
-      let compId;
-      const componentId = data.componentId;
-      const component = basicElements.find((item) => item.id == componentId);
-
-      component.active = false;
-
-      compId = Math.random().toString(16).slice(2);
-      component.uid = compId;
-      this.componetIds.push(compId);
-
-      if (data.parentId) {
-        const parent = this.store.getComponentList().find((item) => {
-          item.uid == data.parentId;
-        });
-        console.log(parent.uid);
-      }
-
-      if (component.isLayout) {
-        component.grid.forEach((cell) => {
-          cell.active = false;
-          compId = Math.random().toString(16).slice(2);
-
-          cell.uid = compId;
-          this.componetIds.push(compId);
-        });
-      }
-
-      if (component.childs) {
-        component.childs.forEach((child) => {
-          child.active = false;
-          compId = Math.random().toString(16).slice(2);
-
-          child.uid = compId;
-          this.componetIds.push(compId);
-        });
-      }
-
-      const dropElementY = event.y;
-      const compTables = this.$refs.container.querySelectorAll(".drop-el"); //might need to take this list from state
-
-      if (compTables.length >= 1) {
-        let added = false;
-        for (let i = 0; i < compTables.length; i++) {
-          const compTablesY1 =
-            compTables[i].getBoundingClientRect().y +
-            compTables[i].getBoundingClientRect().height / 2;
-          const compTablesY2 =
-            compTables[i].getBoundingClientRect().y +
-            compTables[i].getBoundingClientRect().height;
-
-          //insert above
-          if (dropElementY <= compTablesY1) {
-            this.components.splice(i, 0, component);
-            added = true;
-            break;
-          }
-
-          //insert below
-          if (dropElementY <= compTablesY2) {
-            this.components.splice(i + 1, 0, component);
-            added = true;
-            break;
-          }
-        }
-        if (!added) {
-          this.components.push(component);
-        }
-      } else {
-        this.components.push(component);
-      }
-
-      this.store.resetComponentList();
-      this.store.setComponentList(this.components);
-    },
     searchComponentTree(element, id) {
       if (element.uid === id) {
         return element;
@@ -171,7 +97,7 @@ export default {
       let nested = this.createElement(comp);
       if (comp.components) {
         comp.components.forEach((c) => {
-          nested.components.push(this.getNestedElement(c))
+          nested.components.push(this.getNestedElement(c));
           //nested.components = this.getNestedElement(c);
         });
       }
@@ -181,9 +107,13 @@ export default {
       //let element = this.createElement(comp);
       //element.components = this.getNestedElement(comp);
       let ele = this.getNestedElement(comp);
-      
-      if (to === "-1") {
-        this.components.push(ele);
+
+      if (to.id === "-1") {
+        if (to.location) {
+          this.components.splice(to.location, 0, ele);
+        } else {
+          this.components.push(ele);
+        }
       } else {
         var addTo = this.searchComponentTree(ele, to);
         if (addTo != null) {
@@ -218,27 +148,56 @@ export default {
       const componentListDescription = componentDescription;
       if (componentListDescription.components) {
         componentListDescription.components.forEach((c) => {
-          this.addElem(c, data.parentId);
+          //this.addElem(c, data.parentId);
+          this.addElem(c, {
+            id: data.parentId,
+            location: null,
+          });
         });
       }
-      //var element = this.createElement(componentListDescription);
+    },
+    getLocation(event, selector){
+      const dropElementY = event.y;
+      // selector '#selector.id
+      const compTables = this.$refs.container.querySelectorAll(selector); //might need to take this list from state
+      let location = null;
+      if (compTables.length >= 1) {
+        for (let i = 0; i < compTables.length; i++) {
+          const compTablesY1 =
+            compTables[i].getBoundingClientRect().y +
+            compTables[i].getBoundingClientRect().height / 2;
+          const compTablesY2 =
+            compTables[i].getBoundingClientRect().y +
+            compTables[i].getBoundingClientRect().height;
+
+          //insert above
+          if (dropElementY <= compTablesY1) {
+            location = i;
+            break;
+          }
+
+          //insert below
+          if (dropElementY <= compTablesY2) {
+            location = i + 1;
+            break;
+          }
+        }
+      }
+      return location;
     },
     onDrop(event) {
-      //let compId;
       const componentId = event.dataTransfer.getData("componentId");
       const componentDescription = basicElements.find(
         (item) => item.id == componentId
-      );
-      const componentListDescription = componentDescription;
+      );   
 
-      //add last in all components
-      /*var element = this.createElement(componentListDescription);
-      this.components.push(element);
-      let compId = element.uid;*/
-
-      if (componentListDescription.components) {
-        componentListDescription.components.forEach((c) => {
-          this.addElem(c, "-1");
+      //TO-DO: make sure to add in correct order
+      if (componentDescription.components) {
+        componentDescription.components.forEach((c) => {
+          this.addElem(c, {
+            id: "-1",
+            location: this.getLocation(event, ".drop-el"),
+          });
         });
       }
 
@@ -247,7 +206,6 @@ export default {
               this.createRootElement();
 
       }
-
 
       component.components.forEach((comp) => {
         this.components = this.add(comp);

@@ -22,7 +22,7 @@ var getTree = function (data) {
     BaseComp,
     {
       //initialHeigt: this.componentData.pops.minHight,
-      id: data.uid,
+      uid: data.uid,
       isActive: data.active,
       classes: finalclass,
       class: finalclass,

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <the-header title="wap wap wap wap" />
+    <the-header title="Websitebuilder" />
     <div class="editor-layout">
       <!--<main-editor/>-->
       <main-area></main-area>

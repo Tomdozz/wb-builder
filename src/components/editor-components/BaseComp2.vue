@@ -1,51 +1,49 @@
 <template>
+  <!--Now add controls that are same size as slot-->
+  <div
+    :style="computedStyle"
+    :id="uid"
+    class="drop-el"
+    ref="container"
+    @drop="onDrop($event, this)"
+    @mousedown="(e) => $emit('mousdown', id)"
+    @click.self="toggleActive"
+  >
     <slot></slot>
-    <!--Now add controls that are same size as slot-->
-    <!--<div
-      :style="computedStyle"
-      class="drop-el"
-      ref="container"
-      @mousedown="(e) => $emit('mousdown', id)"
-      @click.self="toggleActive"
-    >
-      <div v-if="activated" class="resizers">
-        <div
-          @mousedown="initResize($event, 'tl')"
-          class="resizer top-left"
-        ></div>
-        <div
-          @mousedown="initResize($event, 'rt')"
-          class="resizer top-right"
-        ></div>
-        <div
-          @mousedown="initResize($event, 'bl')"
-          class="resizer bottom-left"
-        ></div>
-        <div
-          @mousedown="initResize($event, 'br')"
-          class="resizer bottom-right"
-        ></div>
-      </div>
-    </div>-->
-    <Toolbar v-if="activated"></Toolbar>
+    <div v-if="activated" class="resizers">
+      <div @mousedown="initResize($event, 'tl')" class="resizer top-left"></div>
+      <div
+        @mousedown="initResize($event, 'rt')"
+        class="resizer top-right"
+      ></div>
+      <div
+        @mousedown="initResize($event, 'bl')"
+        class="resizer bottom-left"
+      ></div>
+      <div
+        @mousedown="initResize($event, 'br')"
+        class="resizer bottom-right"
+      ></div>
+    </div>
+  </div>
+  <Toolbar v-if="activated"></Toolbar>
 </template>
 
 <script>
 import Toolbar from "./Toolbar.vue";
-import {useComponentStore} from "../../store/useComponent"
-import { storeToRefs } from 'pinia'
+import { useComponentStore } from "../../store/useComponent";
+import { storeToRefs } from "pinia";
 //import { mapState } from 'pinia'
 
-
 export default {
-    setup() {
+  setup() {
     const store = useComponentStore();
-    const {currentelement} = storeToRefs(store)
+    const { currentelement } = storeToRefs(store);
 
     return {
       currentelement,
-      store
-    }
+      store,
+    };
   },
   inject: ["getActive"],
   data() {
@@ -70,7 +68,7 @@ export default {
     };
   },
   props: {
-    id: {
+    uid: {
       type: String,
     },
     styles: {
@@ -98,15 +96,14 @@ export default {
       type: Boolean,
     },
     fullyResizable: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
 
   computed: {
     // ...mapState(useComponentStore(), ['currentelement']),
     activated() {
-     
-      return this.id == this.currentelement;
+      return this.uid == this.currentelement;
     },
     computedStyle() {
       return {
@@ -114,7 +111,7 @@ export default {
         width: this.width + "px",
         top: this.top + "px",
         left: this.left + "px",
-        position: this.fullyResizable ? 'absolute' : 'relative'
+        position: this.fullyResizable ? "absolute" : "relative",
       };
     },
     classData() {
@@ -123,7 +120,7 @@ export default {
   },
   methods: {
     toggleActive() {
-      this.store.setNewActive(this.id);
+      this.store.setNewActive(this.uid);
       //console.log('clicked' + this.id)
       //this.$parent.$emit("activated", this.id);
     },
@@ -165,7 +162,8 @@ export default {
           }
         } else if (this.currentresiser === "bl") {
           const width = this.original_width - (e.pageX - this.original_mouse_x);
-          const height = this.original_height + (e.pageY - this.original_mouse_y);
+          const height =
+            this.original_height + (e.pageY - this.original_mouse_y);
           if (width > this.minimum_size) {
             this.width = width;
             this.left = this.original_x + (e.pageX - this.original_mouse_x);
@@ -175,7 +173,8 @@ export default {
           }
         } else if (this.currentresiser === "tr") {
           const width = this.original_width + (e.pageX - this.original_mouse_x);
-          const height = this.original_height - (e.pageY - this.original_mouse_y);
+          const height =
+            this.original_height - (e.pageY - this.original_mouse_y);
           if (width > this.minimum_size) {
             this.width = width;
           }
@@ -185,7 +184,8 @@ export default {
           }
         } else {
           const width = this.original_width - (e.pageX - this.original_mouse_x);
-          const height = this.original_height - (e.pageY - this.original_mouse_y);
+          const height =
+            this.original_height - (e.pageY - this.original_mouse_y);
           if (width > this.minimum_size) {
             this.width = width;
             this.left = this.original_x + (e.pageX - this.original_mouse_x);
@@ -199,6 +199,17 @@ export default {
     },
     stopResize() {
       window.removeEventListener("mousemove", this.resizer);
+    },
+    onDrop(event,target) {
+      //const componentID = event.dataTransfer.getData("componentId");
+      /*console.log({
+        componentId: event.dataTransfer.getData("componentId"),
+        parentId: target.id
+      });*/
+      this.store.setDropElement({
+        componentId: event.dataTransfer.getData("componentId"),
+        parentId: target.id
+      });
     },
   },
   components: { Toolbar },
