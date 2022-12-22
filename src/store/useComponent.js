@@ -15,6 +15,9 @@ export const useComponentStore = defineStore("main", {
         },
         getDropElement: state => {
             state.dropElement; 
+        },
+        isDropEmpty() {
+            return JSON.stringify(this.dropElement) === '{}';
         }
     },
     actions: {
@@ -32,6 +35,9 @@ export const useComponentStore = defineStore("main", {
         },
         setDropElement(val){
             this.dropElement = val;
+        },
+        clearDropElemet(){
+            this.dropElement = {}
         }
     }
 })

@@ -39,6 +39,7 @@ export default {
       currentelement,
       store,
       dropElement,
+     // isDropEmpty: store.isDropEmpty
       //currentDrop
     };
   },
@@ -60,6 +61,10 @@ export default {
           " and parent is " +
           oldval.parentId
       );
+      console.log(this.store.isDropEmpty)
+      if(!this.store.isDropEmpty){
+        this.onDropNested(newval);
+      }
     },
   },
   data() {
@@ -98,14 +103,11 @@ export default {
       if (comp.components) {
         comp.components.forEach((c) => {
           nested.components.push(this.getNestedElement(c));
-          //nested.components = this.getNestedElement(c);
         });
       }
       return nested;
     },
     addElem(comp, to) {
-      //let element = this.createElement(comp);
-      //element.components = this.getNestedElement(comp);
       let ele = this.getNestedElement(comp);
 
       if (to.id === "-1") {
@@ -115,21 +117,19 @@ export default {
           this.components.push(ele);
         }
       } else {
-        var addTo = this.searchComponentTree(ele, to);
+        var addTo = null;
+        for (let i = 0; i < this.components.length; i++) {
+          addTo = this.searchComponentTree(this.components[i], to.id);
+          if(addTo){
+            break;
+          }
+        }
         if (addTo != null) {
           addTo.components.push(ele);
         } else {
           console.log("could not find the element");
-          //this.components.push(element);
         }
       }
-
-      /*this.components.forEach((c) => {
-        if(c.uid === to){
-          c.components.push(element);
-          return;
-        }
-      })*/
     },
     createElement(data) {
       return {
@@ -142,8 +142,9 @@ export default {
       };
     },
     onDropNested(data) {
+      console.log(data);
       const componentDescription = basicElements.find(
-        (item) => item.id == data.omponentId
+        (item) => item.id == data.componentId
       );
       const componentListDescription = componentDescription;
       if (componentListDescription.components) {
@@ -151,13 +152,13 @@ export default {
           //this.addElem(c, data.parentId);
           this.addElem(c, {
             id: data.parentId,
-            location: null,
+            location: this.getLocation(data.y, "." + this.uid),
           });
         });
       }
     },
-    getLocation(event, selector){
-      const dropElementY = event.y;
+    getLocation(eventY, selector) {
+      const dropElementY = eventY;
       // selector '#selector.id
       const compTables = this.$refs.container.querySelectorAll(selector); //might need to take this list from state
       let location = null;
@@ -186,100 +187,25 @@ export default {
       return location;
     },
     onDrop(event) {
-      const componentId = event.dataTransfer.getData("componentId");
-      const componentDescription = basicElements.find(
-        (item) => item.id == componentId
-      );   
-
-      //TO-DO: make sure to add in correct order
-      if (componentDescription.components) {
-        componentDescription.components.forEach((c) => {
-          this.addElem(c, {
-            id: "-1",
-            location: this.getLocation(event, ".drop-el"),
-          });
-        });
-      }
-
-      /*if(this.components.length == 0){
-              compId = Math.random().toString(16).slice(2);
-              this.createRootElement();
-
-      }
-
-      component.components.forEach((comp) => {
-        this.components = this.add(comp);
-      });*/
-      //console.log(this.add(component, this.components));
-      console.log(this.components);
-      //this.components = this.recursion(component);
-      /*this.components.forEach((c) => {
-        console.log(c);
-      });*/
-      //console.log(this.components);
-      /*component.active = false;
-      compId = Math.random().toString(16).slice(2);
-      component.uid = compId;
-      
-      
-      this.componetIds.push(compId);
-
-      if (component.isLayout) {
-        component.grid.forEach((cell) => {
-          cell.active = false;
-          compId = Math.random().toString(16).slice(2);
-
-          cell.uid = compId;
-          this.componetIds.push(compId);
-        });
-      }
-
-      if (component.childs) {
-        component.childs.forEach((child) => {
-          child.active = false;
-          compId = Math.random().toString(16).slice(2);
-
-          child.uid = compId;
-          this.componetIds.push(compId);
-        });
-      }
-
-      const dropElementY = event.y;
-      const compTables = this.$refs.container.querySelectorAll(".drop-el"); //might need to take this list from state
-
-      if (compTables.length >= 1) {
-        let added = false;
-        for (let i = 0; i < compTables.length; i++) {
-          const compTablesY1 =
-            compTables[i].getBoundingClientRect().y +
-            compTables[i].getBoundingClientRect().height / 2;
-          const compTablesY2 =
-            compTables[i].getBoundingClientRect().y +
-            compTables[i].getBoundingClientRect().height;
-
-          //insert above
-          if (dropElementY <= compTablesY1) {
-            this.components.splice(i, 0, component);
-            added = true;
-            break;
-          }
-
-          //insert below
-          if (dropElementY <= compTablesY2) {
-            this.components.splice(i + 1, 0, component);
-            added = true;
-            break;
-          }
-        }
-        if (!added) {
-          this.components.push(component);
-        }
+      if(!this.store.isDropEmpty) {
+        this.store.clearDropElemet();
+        console.log('dropped in nested')
       } else {
-        this.components.push(component);
-      }
+        const componentId = event.dataTransfer.getData("componentId");
+        const componentDescription = basicElements.find(
+          (item) => item.id == componentId
+        );
 
-      this.store.resetComponentList();
-      this.store.setComponentList(this.components);*/
+        //TO-DO: make sure to add in correct order
+        if (componentDescription.components) {
+          componentDescription.components.forEach((c) => {
+            this.addElem(c, {
+              id: "-1",
+              location: this.getLocation(event, ".drop-el"),
+            });
+          });
+        }
+      }
     },
   },
 };

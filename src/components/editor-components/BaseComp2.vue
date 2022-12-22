@@ -3,6 +3,7 @@
   <div
     :style="computedStyle"
     :id="uid"
+    :class="uid"
     class="drop-el"
     ref="container"
     @drop="onDrop($event, this)"
@@ -201,14 +202,18 @@ export default {
       window.removeEventListener("mousemove", this.resizer);
     },
     onDrop(event,target) {
+      console.log(target)
       //const componentID = event.dataTransfer.getData("componentId");
-      /*console.log({
+      console.log({
         componentId: event.dataTransfer.getData("componentId"),
-        parentId: target.id
-      });*/
+        parentId: target.uid,
+        id: this.uid,
+      });
       this.store.setDropElement({
         componentId: event.dataTransfer.getData("componentId"),
-        parentId: target.id
+        parentId: target.uid,
+        id: this.uid,
+        y:  event.y
       });
     },
   },
