@@ -14,12 +14,15 @@
         @add-sub="fromSub"
       ></editor-component>
       <h1>{{ currentelement }}</h1>
+      <base-advanced-setting v-if="toolboxOpen" :val="null" :teleportToUid="currentelement" />
+
     </div>
   </div>
 </template>
 
 <script>
 import EditorComponent from "./EditorComponent2.vue";
+import BaseAdvancedSetting from "../UI/BaseAdvancedSetting.vue";
 import basicElements from "../../assets/components/componentList.js";
 import { useComponentStore } from "../../store/useComponent";
 import { storeToRefs } from "pinia";
@@ -28,23 +31,15 @@ export default {
   setup() {
     const store = useComponentStore();
     const { currentelement, dropElement } = storeToRefs(store);
-    //let currentDrop = null;
-
-    /*store.$subscribe((mutation, state) =>{
-      //currentDrop = state.dropElement;
-      console.log(mutation, state);
-    } )*/
-
     return {
       currentelement,
       store,
       dropElement,
-     // isDropEmpty: store.isDropEmpty
-      //currentDrop
     };
   },
   components: {
     EditorComponent,
+    BaseAdvancedSetting
   },
   watch: {
     dropElement(newval, oldval) {
@@ -66,12 +61,19 @@ export default {
         this.onDropNested(newval);
       }
     },
+    currentelement(newval, oldval){
+      console.log(newval + oldval)
+      if(!this.store.isCurrerntElementEmpty){
+        this.toolboxOpen = true;
+      }
+    }
   },
   data() {
     return {
       components: [],
       componetIds: [],
       activeComponent: "",
+      toolboxOpen: false
     };
   },
   provide() {
@@ -159,7 +161,6 @@ export default {
     },
     getLocation(eventY, selector) {
       const dropElementY = eventY;
-      // selector '#selector.id
       const compTables = this.$refs.container.querySelectorAll(selector); //might need to take this list from state
       let location = null;
       if (compTables.length >= 1) {
@@ -196,7 +197,6 @@ export default {
           (item) => item.id == componentId
         );
 
-        //TO-DO: make sure to add in correct order
         if (componentDescription.components) {
           componentDescription.components.forEach((c) => {
             this.addElem(c, {

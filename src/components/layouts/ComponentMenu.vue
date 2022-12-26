@@ -41,7 +41,6 @@
 
 <script>
 import basicElements from "../../assets/components/componentList.js";
-
 export default {
   data() {
     return {
@@ -50,7 +49,7 @@ export default {
     };
   },
   mounted() {
-    console.log(basicElements)
+    console.log(basicElements);
     //fix this
     basicElements.forEach((e) => {
       this.activeList.push({

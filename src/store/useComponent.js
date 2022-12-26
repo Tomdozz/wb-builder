@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useComponentStore = defineStore("main", {
     state: () => ({
-        currentelement: 'test',
+        currentelement: '0',
         componentList: [],
         dropElement: {}
     }),
@@ -18,6 +18,9 @@ export const useComponentStore = defineStore("main", {
         },
         isDropEmpty() {
             return JSON.stringify(this.dropElement) === '{}';
+        },
+        isCurrerntElementEmpty(){
+            return customElements === '0';
         }
     },
     actions: {
