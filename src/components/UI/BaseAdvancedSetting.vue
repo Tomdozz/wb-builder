@@ -1,36 +1,58 @@
 <template>
   <teleport to="#main-zone">
-    <div class="advanced-setting">
+    <div class="advanced-setting" :style="settingStyle">
       <div class="head-button-wrapper">
         <button :class="regular ? 'selected' : ''"></button>
         <button :class="!regular ? 'selected' : ''"></button>
       </div>
-      <div class="setting-wrapper" :class="selected === -1 ? 'expanded' : ''">
-        <div class="menu">
-          <div class="tab" @click="setSelected(0)">
-            <i class="icon fa-solid fa-border-all"></i>
-            <span> Fill color </span>
+      <base-content-card :collapsed="true">
+        <template #title>
+          <span> Base </span>
+        </template>
+        <template #actions>
+          <div
+            class="setting-wrapper"
+            :class="selected === -1 ? 'expanded' : ''"
+          >
+            <div class="menu">
+              <div class="tab" @click="setSelected(0)">
+                <i class="icon fa-solid fa-border-all"></i>
+                <span> Fill color </span>
+              </div>
+              <div class="tab" @click="setSelected(1)">
+                <i class="icon fa-solid fa-border-all"></i>
+                <span> Border </span>
+              </div>
+              <div class="tab" @click="setSelected(2)">
+                <i class="icon fa-solid fa-border-all"></i>
+                <span> Corners </span>
+              </div>
+              <div class="tab" @click="setSelected(3)">
+                <i class="icon fa-solid fa-border-all"></i>
+                <span> Shadow </span>
+              </div>
+            </div>
+            <div class="content">test</div>
           </div>
-          <div class="tab" @click="setSelected(1)">
-            <i class="icon fa-solid fa-border-all"></i>
-            <span> Border </span>
-          </div>
-          <div class="tab" @click="setSelected(2)">
-            <i class="icon fa-solid fa-border-all"></i>
-            <span> Corners </span>
-          </div>
-          <div class="tab" @click="setSelected(3)">
-            <i class="icon fa-solid fa-border-all"></i>
-            <span> shadow </span>
-          </div>
-        </div>
-        <div class="content">test</div>
-      </div>
+        </template>
+      </base-content-card>
+      <base-content-card >
+        <template #title>
+          <span> Layout </span>
+        </template>
+        <template #actions>
+          <div>layout setting</div>
+        </template>
+      </base-content-card>
     </div>
   </teleport>
 </template>
 <script>
+import BaseContentCard from "../UI/BaseContentCard.vue";
 export default {
+  components: {
+    BaseContentCard,
+  },
   data() {
     return {
       regular: true,
@@ -44,15 +66,26 @@ export default {
       required: true,
     },
     top: {
-      type: Number
+      type: Number,
     },
     left: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   methods: {
     setSelected(id) {
       this.selected = id;
+    },
+  },
+  computed: {
+    settingStyle() {
+      if (this.top || this.left) {
+        return {
+          top: this.top + "px",
+          left: this.left + "px",
+        };
+      }
+      return null;
     },
   },
 };
@@ -65,11 +98,12 @@ export default {
   left: 0px;
   max-width: 300px;
   min-width: 280px;
+  border-radius: 10px;
+  background-color: rgb(213, 213, 213);
 }
 .setting-wrapper {
   display: flex;
   padding: 5px;
-  background-color: rgb(226, 226, 226);
 }
 .setting-wrapper.expanded .content {
   display: none;

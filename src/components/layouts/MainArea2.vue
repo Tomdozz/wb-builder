@@ -14,7 +14,7 @@
         @add-sub="fromSub"
       ></editor-component>
       <h1>{{ currentelement }}</h1>
-      <base-advanced-setting v-if="toolboxOpen" :val="null" :teleportToUid="currentelement" />
+      <base-advanced-setting v-if="toolboxOpen" :top="toolBoxPosition.y" :left="toolBoxPosition.x" :val="null" :teleportToUid="currentelement" />
 
     </div>
   </div>
@@ -30,11 +30,12 @@ import { storeToRefs } from "pinia";
 export default {
   setup() {
     const store = useComponentStore();
-    const { currentelement, dropElement } = storeToRefs(store);
+    const { currentelement, dropElement, toolBoxPosition } = storeToRefs(store);
     return {
       currentelement,
       store,
       dropElement,
+      toolBoxPosition
     };
   },
   components: {
@@ -42,27 +43,12 @@ export default {
     BaseAdvancedSetting
   },
   watch: {
-    dropElement(newval, oldval) {
-      //next step is to add component, to nested element
-      console.log(
-        "newval id is: " +
-          newval.componentId +
-          " and parent is " +
-          newval.parentId
-      );
-      console.log(
-        "oldval id is: " +
-          oldval.componentId +
-          " and parent is " +
-          oldval.parentId
-      );
-      console.log(this.store.isDropEmpty)
+    dropElement(val) {
       if(!this.store.isDropEmpty){
-        this.onDropNested(newval);
+        this.onDropNested(val);
       }
     },
-    currentelement(newval, oldval){
-      console.log(newval + oldval)
+    currentelement(){
       if(!this.store.isCurrerntElementEmpty){
         this.toolboxOpen = true;
       }

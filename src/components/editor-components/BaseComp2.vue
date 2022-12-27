@@ -8,7 +8,7 @@
     ref="container"
     @drop="onDrop($event, this)"
     @mousedown="(e) => $emit('mousdown', id)"
-    @click.self="toggleActive"
+    @click.self="toggleActive($event)"
   >
     <slot></slot>
     <div v-if="activated" class="resizers">
@@ -120,7 +120,9 @@ export default {
     },
   },
   methods: {
-    toggleActive() {
+    toggleActive(e) {
+      console.log(e);
+      this.store.setToolBoxPosition({ x: e.x, y: e.y });
       this.store.setNewActive(this.uid);
       //console.log('clicked' + this.id)
       //this.$parent.$emit("activated", this.id);
@@ -201,8 +203,8 @@ export default {
     stopResize() {
       window.removeEventListener("mousemove", this.resizer);
     },
-    onDrop(event,target) {
-      console.log(target)
+    onDrop(event, target) {
+      console.log(target);
       //const componentID = event.dataTransfer.getData("componentId");
       console.log({
         componentId: event.dataTransfer.getData("componentId"),
@@ -213,7 +215,7 @@ export default {
         componentId: event.dataTransfer.getData("componentId"),
         parentId: target.uid,
         id: this.uid,
-        y:  event.y
+        y: event.y,
       });
     },
   },
@@ -229,6 +231,10 @@ export default {
   border: 1px dotted black;
   position: relative;
   padding: 5px;
+}
+.drop-el:hover{
+    border: 1px solid aquamarine;
+
 }
 .wrapper {
   position: relative;

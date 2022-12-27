@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useComponentStore = defineStore("main", {
     state: () => ({
         currentelement: '0',
+        toolBoxPosition: {},
         componentList: [],
         dropElement: {}
     }),
@@ -21,6 +22,9 @@ export const useComponentStore = defineStore("main", {
         },
         isCurrerntElementEmpty(){
             return customElements === '0';
+        },
+        getToolBoxPosition: state => {
+            state.toolBoxPosition;
         }
     },
     actions: {
@@ -41,6 +45,9 @@ export const useComponentStore = defineStore("main", {
         },
         clearDropElemet(){
             this.dropElement = {}
+        },
+        setToolBoxPosition(val){
+            this.toolBoxPosition = val;
         }
     }
 })
