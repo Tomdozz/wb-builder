@@ -220,6 +220,7 @@ export default {
         id: this.uid,
         y: event.y,
       });
+      event.stopPropagation();
     },
   },
   components: { Toolbar },
