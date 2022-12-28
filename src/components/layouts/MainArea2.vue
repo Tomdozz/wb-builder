@@ -11,11 +11,15 @@
         v-for="component in components"
         :key="component.uid"
         :component="component"
-        @add-sub="fromSub"
       ></editor-component>
       <h1>{{ currentelement }}</h1>
-      <base-advanced-setting v-if="toolboxOpen" :top="toolBoxPosition.y" :left="toolBoxPosition.x" :val="null" :teleportToUid="currentelement" />
-
+      <base-advanced-setting
+        v-if="toolboxOpen"
+        :top="toolBoxPosition.y"
+        :left="toolBoxPosition.x"
+        :val="null"
+        :teleportToUid="currentelement"
+      />
     </div>
   </div>
 </template>
@@ -35,31 +39,31 @@ export default {
       currentelement,
       store,
       dropElement,
-      toolBoxPosition
+      toolBoxPosition,
     };
   },
   components: {
     EditorComponent,
-    BaseAdvancedSetting
+    BaseAdvancedSetting,
   },
   watch: {
     dropElement(val) {
-      if(!this.store.isDropEmpty){
+      if (!this.store.isDropEmpty) {
         this.onDropNested(val);
       }
     },
-    currentelement(){
-      if(!this.store.isCurrerntElementEmpty){
+    currentelement() {
+      if (!this.store.isCurrerntElementEmpty) {
         this.toolboxOpen = true;
       }
-    }
+    },
   },
   data() {
     return {
       components: [],
       componetIds: [],
       activeComponent: "",
-      toolboxOpen: false
+      toolboxOpen: false,
     };
   },
   provide() {
@@ -68,21 +72,21 @@ export default {
     };
   },
   methods: {
-    fromSub(data) {
-      console.log("data from sub is: " + data);
-    },
-    setActive(id) {
-      this.activeComponent = id;
-    },
-    searchComponentTree(element, id) {
-      if (element.uid === id) {
-        return element;
-      } else if (element.components) {
-        var result = null;
-        element.components.forEach((c) => {
-          result = this.searchComponentTree(c, id);
-        });
-        return result;
+    deepSearch(object, key, predicate) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (object.hasOwnProperty(key) && predicate(key, object[key]) === true)
+        return object;
+
+      for (let i = 0; i < Object.keys(object).length; i++) {
+        let value = object[Object.keys(object)[i]];
+        if (typeof value === "object" && value != null) {
+          let o = this.deepSearch(
+            object[Object.keys(object)[i]],
+            key,
+            predicate
+          );
+          if (o != null) return o;
+        }
       }
       return null;
     },
@@ -105,13 +109,11 @@ export default {
           this.components.push(ele);
         }
       } else {
-        var addTo = null;
-        for (let i = 0; i < this.components.length; i++) {
-          addTo = this.searchComponentTree(this.components[i], to.id);
-          if(addTo){
-            break;
-          }
-        }
+        var addTo = this.deepSearch(
+          this.components,
+          "uid",
+          (k, v) => v === to.id
+        );
         if (addTo != null) {
           addTo.components.push(ele);
         } else {
@@ -130,14 +132,12 @@ export default {
       };
     },
     onDropNested(data) {
-      console.log(data);
       const componentDescription = basicElements.find(
         (item) => item.id == data.componentId
       );
       const componentListDescription = componentDescription;
       if (componentListDescription.components) {
         componentListDescription.components.forEach((c) => {
-          //this.addElem(c, data.parentId);
           this.addElem(c, {
             id: data.parentId,
             location: this.getLocation(data.y, "." + this.uid),
@@ -174,9 +174,9 @@ export default {
       return location;
     },
     onDrop(event) {
-      if(!this.store.isDropEmpty) {
+      if (!this.store.isDropEmpty) {
         this.store.clearDropElemet();
-        console.log('dropped in nested')
+        console.log("dropped in nested");
       } else {
         const componentId = event.dataTransfer.getData("componentId");
         const componentDescription = basicElements.find(

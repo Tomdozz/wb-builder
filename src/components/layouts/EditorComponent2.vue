@@ -25,10 +25,12 @@ var getTree = function (data) {
       uid: data.uid,
       isActive: data.active,
       classes: finalclass,
+      type: data.type,
       class: finalclass,
       //on: this.$attrs,
     },
-    [
+    childs
+    /*[
       h(
         data.type,
         {
@@ -36,7 +38,7 @@ var getTree = function (data) {
         },
         childs
       ),
-    ]
+    ]*/
   );
 
   return result;

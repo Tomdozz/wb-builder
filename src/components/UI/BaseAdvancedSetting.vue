@@ -36,7 +36,15 @@
           </div>
         </template>
       </base-content-card>
-      <base-content-card >
+      <base-content-card :collapsed="true">
+        <template #title>
+          <span> spacing </span>
+        </template>
+        <template #actions>
+          <div>layout setting</div>
+        </template>
+      </base-content-card>
+      <base-content-card :collapsed="true">
         <template #title>
           <span> Layout </span>
         </template>
@@ -96,10 +104,11 @@ export default {
   position: absolute;
   top: 0px;
   left: 0px;
-  max-width: 300px;
-  min-width: 280px;
+  max-width: 390px;
+  min-width: 350px;
   border-radius: 10px;
   background-color: rgb(213, 213, 213);
+  padding: 10px;
 }
 .setting-wrapper {
   display: flex;

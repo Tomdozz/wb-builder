@@ -1,9 +1,10 @@
 <template>
   <!--Now add controls that are same size as slot-->
-  <div
+  <component
+    :is="type"
     :style="computedStyle"
     :id="uid"
-    :class="uid"
+    :class="[uid, classes]"
     class="drop-el"
     ref="container"
     @drop="onDrop($event, this)"
@@ -26,7 +27,7 @@
         class="resizer bottom-right"
       ></div>
     </div>
-  </div>
+  </component>
   <Toolbar v-if="activated"></Toolbar>
 </template>
 
@@ -99,6 +100,9 @@ export default {
     fullyResizable: {
       type: Boolean,
     },
+    type: {
+      type: String
+    }
   },
 
   computed: {
@@ -107,13 +111,14 @@ export default {
       return this.uid == this.currentelement;
     },
     computedStyle() {
-      return {
+      return null;
+      /*return {
         height: this.height + "px",
         width: this.width + "px",
         top: this.top + "px",
         left: this.left + "px",
         position: this.fullyResizable ? "absolute" : "relative",
-      };
+      };*/
     },
     classData() {
       return this.classes;
@@ -204,8 +209,6 @@ export default {
       window.removeEventListener("mousemove", this.resizer);
     },
     onDrop(event, target) {
-      console.log(target);
-      //const componentID = event.dataTransfer.getData("componentId");
       console.log({
         componentId: event.dataTransfer.getData("componentId"),
         parentId: target.uid,
@@ -224,13 +227,14 @@ export default {
 </script>
 
 <style scoped>
-.columns {
+/*.columns {
   display: flex;
-}
+}*/
 .drop-el {
   border: 1px dotted black;
   position: relative;
   padding: 5px;
+  /*min-height: 80px;*/
 }
 .drop-el:hover{
     border: 1px solid aquamarine;
