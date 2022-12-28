@@ -18,7 +18,7 @@
         :top="toolBoxPosition.y"
         :left="toolBoxPosition.x"
         :val="null"
-        :teleportToUid="currentelement"
+        @close="this.toolboxOpen = false"
       />
     </div>
   </div>
@@ -196,16 +196,17 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .main-editor {
   width: 80%;
   height: 900px;
-}
-.drop-zone {
-  height: 98%;
-  width: 98%;
-  margin: 10px auto;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 0 10px #ccc;
+  
+  .drop-zone {
+    height: 98%;
+    width: 98%;
+    margin: 10px auto;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 10px #ccc;
+  }
 }
 </style>

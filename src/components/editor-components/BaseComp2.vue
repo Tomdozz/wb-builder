@@ -233,9 +233,9 @@ export default {
 }*/
 .drop-el {
   border: 1px dotted black;
-  position: relative;
+  /*position: relative;*/
   padding: 5px;
-  /*min-height: 80px;*/
+  min-height: 80px;
 }
 .drop-el:hover{
     border: 1px solid aquamarine;

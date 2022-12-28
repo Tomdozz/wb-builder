@@ -1,9 +1,10 @@
 <template>
   <teleport to="#main-zone">
     <div class="advanced-setting" :style="settingStyle">
+      <i @click="$emit('close')" class="icon close fa-solid fa-xmark"></i>
       <div class="head-button-wrapper">
-        <button :class="regular ? 'selected' : ''"></button>
-        <button :class="!regular ? 'selected' : ''"></button>
+        <button :class="regular ? 'selected' : ''">regular</button>
+        <button :class="!regular ? 'selected' : ''">hover</button>
       </div>
       <base-content-card :collapsed="true">
         <template #title>
@@ -109,6 +110,9 @@ export default {
   border-radius: 10px;
   background-color: rgb(213, 213, 213);
   padding: 10px;
+}
+.close{
+  float: right;
 }
 .setting-wrapper {
   display: flex;
