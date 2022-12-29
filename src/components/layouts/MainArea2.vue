@@ -203,10 +203,10 @@ export default {
   
   .drop-zone {
     height: 98%;
-    width: 98%;
-    margin: 10px auto;
+    //width: 98%;
+    //margin: 10px auto;
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 10px #ccc;
+    //box-shadow: 0 0 10px #ccc;
   }
 }
 </style>

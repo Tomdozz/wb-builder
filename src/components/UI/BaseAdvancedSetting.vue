@@ -100,7 +100,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '../../../public/css/variables.scss';
+
 .advanced-setting {
   position: absolute;
   top: 0px;
@@ -109,6 +111,7 @@ export default {
   min-width: 350px;
   border-radius: 10px;
   background-color: rgb(213, 213, 213);
+  //background-color: $primary-color;
   padding: 10px;
 }
 .close{

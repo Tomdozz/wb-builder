@@ -227,7 +227,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '../../../public/css/variables.scss';
 /*.columns {
   display: flex;
 }*/
@@ -238,7 +239,7 @@ export default {
   min-height: 80px;
 }
 .drop-el:hover{
-    border: 1px solid aquamarine;
+    border: 1px solid $accent-color-accent-10;
 
 }
 .wrapper {
@@ -249,7 +250,7 @@ export default {
   cursor: ns-resize;
   width: 100%;
   height: 15px;
-  background-color: aquamarine;
+  background-color: $accent-color-accent-10;
   position: absolute;
   bottom: 0;
 }
@@ -265,7 +266,7 @@ export default {
   height: 10px;
   border-radius: 50%;
   background: white;
-  border: 3px solid #00ff3c;
+  border: 3px solid $accent-color-accent-10;
   position: absolute;
 }
 

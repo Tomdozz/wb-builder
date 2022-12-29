@@ -76,12 +76,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../../public/css/variables.scss";
+
 .menu-wrapper {
-  margin: 10px auto;
-  box-shadow: 0 0 10px #ccc;
+  //margin: 10px auto;
+  width: 20%;
+  box-shadow: -15px 0px 10px -15px #ccc;
+
   padding: 25px 8px 25px 8px;
-  background-color: rgb(255, 255, 255);
+  background-color: $secondary-color-30;
 }
 .menu {
   padding: 0;

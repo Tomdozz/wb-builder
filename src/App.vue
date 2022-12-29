@@ -25,7 +25,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '../public/css/variables.scss';
+
 .editor-layout {
   display: flex;
 }
@@ -38,6 +40,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color: $primary-color-60;
 }
 </style>
