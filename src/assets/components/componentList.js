@@ -142,6 +142,57 @@ const componentMenu = [
       },
     ],
   },
+  {
+    id: 4,
+    list: 1,
+    name: "forth",
+    icon: "fa-regular fa-square-full",
+    components: [
+      {
+        name: "Row",
+        type: "div",
+        classes: [
+          {
+            name: "grid-x",
+          },
+          {
+            name: "extra-class",
+          },
+        ],
+        components: [
+          {
+            name: "Cell",
+            type: "div",
+            classes: [
+              {
+                name: "cell",
+              },
+            ],
+            components: [
+              {
+                name: "ballzdeep",
+                type: "span",
+                classes: [
+                  {
+                    name: "ballz",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Cell",
+            type: "div",
+            classes: [
+              {
+                name: "cell",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export default componentMenu;

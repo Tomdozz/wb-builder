@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <the-header title="Websitebuilder" />
+    <the-header title="LifeArray" />
     <div class="editor-layout">
       <!--<main-editor/>-->
-      <main-area></main-area>
       <component-menu />
+      <main-area></main-area>
       <!--<website-builder/>-->
     </div>
   </div>

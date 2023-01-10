@@ -2,36 +2,27 @@
   <div class="menu-wrapper">
     <div class="sub-menu-wrapper">
       <div class="sub-menu-toggle" @click="toggleMenu(1)">
-        <span>Sections</span>
-        <!--<p><font-awesome-icon icon="list" /></p>-->
+        <i
+          class="fa-solid fa-square-plus fa-2xl"
+          :class="activatedList === 1 ? 'active' : ''"
+        ></i>
       </div>
-      <div class="menu">
-        <div
-          v-for="el in getList(1)"
-          :key="el.id"
-          class="menu-item"
-          draggable="true"
-          @dragstart="startDrag($event, el)"
-        >
-          <!--<p><font-awesome-icon :icon="el.icon" /></p>-->
-          <span>{{ el.name }}</span>
-        </div>
+      <div class="sub-menu-toggle" @click="toggleMenu(2)">
+        <i
+          class="fa-solid fa-photo-film fa-2xl"
+          :class="activatedList === 2 ? 'active' : ''"
+        ></i>
       </div>
     </div>
-    <div class="sub-menu-wrapper">
-      <div class="sub-menu-toggle" @click="toggleMenu(2)">
-        <span>Elemnts</span>
-        <!--<p><font-awesome-icon icon="list" /></p>-->
-      </div>
+    <div class="current-menu">
       <div class="menu">
         <div
-          v-for="el in getList(2)"
+          v-for="el in getActiveList()"
           :key="el.id"
           class="menu-item"
           draggable="true"
           @dragstart="startDrag($event, el)"
         >
-          <!--<p><font-awesome-icon :icon="el.icon" /></p>-->
           <span>{{ el.name }}</span>
         </div>
       </div>
@@ -46,6 +37,7 @@ export default {
     return {
       elements: basicElements,
       activeList: [],
+      activatedList: -1,
     };
   },
   mounted() {
@@ -62,15 +54,20 @@ export default {
     getList(list) {
       return basicElements.filter((item) => item.list == list);
     },
+    getActiveList() {
+      console.log(basicElements);
+      return basicElements.filter((item) => item.list == this.activatedList);
+    },
     startDrag(event, component) {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("componentId", component.id);
     },
     toggleMenu(list) {
-      const item = this.activeList.find((el) => el.id == list);
-      item.isActive = true;
-      console.log(item);
+      //const item = this.activeList.find((el) => el.id == list);
+      //item.isActive = true;
+      console.log("activated" + list);
+      this.activatedList = list;
     },
   },
 };
@@ -81,15 +78,18 @@ export default {
 
 .menu-wrapper {
   //margin: 10px auto;
-  width: 20%;
-  box-shadow: -15px 0px 10px -15px #ccc;
+  //width: 20%;
+  //box-shadow: -15px 0px 10px -15px #ccc;
+  //box-shadow: 15px 0 5px -9px #ccc;
 
   padding: 25px 8px 25px 8px;
   background-color: $secondary-color-30;
+  position: fixed;
+  top: 5rem;
+  height: 100%;
 }
 .menu {
-  padding: 0;
-  height: 100%;
+  //padding: 10px;
   display: grid;
   margin: 1px;
   grid-template-columns: repeat(3, 1fr);
@@ -97,24 +97,38 @@ export default {
 }
 .menu-item {
   width: 80px;
+  margin: 10px;
   padding: 5px;
   margin: 1px;
+  border-radius: 10px;
 }
 .menu-item:hover {
-  background-color: rgb(206, 206, 206);
+  background-color: $accent-color-accent-10;
   padding: 4.5px;
   box-shadow: 0 0 10px #ccc;
 }
 .sub-menu-wrapper {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  //border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding-bottom: 25px;
+  //box-shadow: 15px 0px 10px -15px #ccc;
 }
 .sub-menu-toggle {
-  padding: 10px 0px;
+  margin-bottom: 15px;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 90%;
   cursor: pointer;
+}
+.current-menu {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  background-color: $secondary-color-30;
+  height: 100%;
+}
+.active {
+  color: $accent-color-accent-10;
 }
 </style>

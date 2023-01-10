@@ -19,3 +19,6 @@
   .min-100{
     min-height: 100px;
   }
+  h4, h5 {
+    margin: 0;
+  }

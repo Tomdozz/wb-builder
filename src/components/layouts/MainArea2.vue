@@ -198,8 +198,10 @@ export default {
 </script>
 <style scoped lang="scss">
 .main-editor {
-  width: 80%;
+  width: 100%;
   height: 900px;
+  margin-left: 80px;
+  margin-top: 5rem;
   
   .drop-zone {
     height: 98%;
