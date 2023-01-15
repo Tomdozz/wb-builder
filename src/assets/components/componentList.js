@@ -7,7 +7,8 @@ const componentMenu = [
     components: [
       {
         name: "Row",
-        type: "div",
+        htmlType: "div",
+        type: "regular",
         classes: [
           {
             name: "grid-x",
@@ -19,7 +20,8 @@ const componentMenu = [
         components: [
           {
             name: "Cell",
-            type: "div",
+            htmlType: "div",
+            type: "regular",
             classes: [
               {
                 name: "cell",
@@ -41,7 +43,8 @@ const componentMenu = [
     components: [
       {
         name: "Row",
-        type: "div",
+        htmlType: "div",
+        type: "regular",
         classes: [
           {
             name: "grid-x",
@@ -53,7 +56,8 @@ const componentMenu = [
         components: [
           {
             name: "Cell",
-            type: "div",
+            htmlType: "div",
+            type: "regular",
             classes: [
               {
                 name: "cell",
@@ -62,7 +66,8 @@ const componentMenu = [
             components: [
               {
                 name: "ballzdeep",
-                type: "span",
+                htmlType: "span",
+                type: "regular",
                 classes: [
                   {
                     name: "ballz",
@@ -73,7 +78,8 @@ const componentMenu = [
           },
           {
             name: "Cell",
-            type: "div",
+            htmlType: "div",
+            type: "regular",
             classes: [
               {
                 name: "cell",
@@ -92,7 +98,8 @@ const componentMenu = [
     components: [
       {
         name: "Row",
-        type: "div",
+        htmlType: "div",
+        type: "regular",
         classes: [
           {
             name: "grid-x",
@@ -104,7 +111,8 @@ const componentMenu = [
         components: [
           {
             name: "Cell",
-            type: "div",
+            htmlType: "div",
+            type: "regular",
             classes: [
               {
                 name: "cell medium-6 large-4",
@@ -116,7 +124,8 @@ const componentMenu = [
           },
           {
             name: "Cell",
-            type: "div",
+            htmlType: "div",
+            type: "regular",
             classes: [
               {
                 name: "cell medium-6 large-6",
@@ -128,7 +137,8 @@ const componentMenu = [
           },
           {
             name: "Cell",
-            type: "div",
+            htmlType: "div",
+            type: "regular",
             classes: [
               {
                 name: "cell medium-6 large-2",
@@ -145,51 +155,44 @@ const componentMenu = [
   {
     id: 4,
     list: 1,
-    name: "forth",
+    name: "Text",
     icon: "fa-regular fa-square-full",
     components: [
       {
-        name: "Row",
-        type: "div",
+        name: "Text",
+        htmlType: "span",
+        type: "text",
         classes: [
           {
-            name: "grid-x",
+            name: "text",
           },
           {
             name: "extra-class",
           },
         ],
-        components: [
+        components: [],
+      },
+    ],
+  },
+  {
+    id: 5,
+    list: 1,
+    name: "H2",
+    icon: "fa-regular fa-square-full",
+    components: [
+      {
+        name: "Text",
+        htmlType: "h2",
+        type: "text",
+        classes: [
           {
-            name: "Cell",
-            type: "div",
-            classes: [
-              {
-                name: "cell",
-              },
-            ],
-            components: [
-              {
-                name: "ballzdeep",
-                type: "span",
-                classes: [
-                  {
-                    name: "ballz",
-                  },
-                ],
-              },
-            ],
+            name: "text",
           },
           {
-            name: "Cell",
-            type: "div",
-            classes: [
-              {
-                name: "cell",
-              },
-            ],
+            name: "extra-class",
           },
         ],
+        components: [],
       },
     ],
   },

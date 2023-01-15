@@ -1,10 +1,12 @@
 <template>
   <!--Now add controls that are same size as slot-->
   <component
-    :is="type"
+    :is="htmlType"
     :style="computedStyle"
     :id="uid"
     :class="[uid, classes]"
+    :builder-type="type"
+    :contentEditable="type === 'text' ? true: false"
     class="drop-el"
     ref="container"
     @drop="onDrop($event, this)"
@@ -12,7 +14,7 @@
     @click.self="toggleActive($event)"
   >
     <slot></slot>
-    <div v-if="activated" class="resizers">
+    <!--<div v-if="activated" class="resizers">
       <div @mousedown="initResize($event, 'tl')" class="resizer top-left"></div>
       <div
         @mousedown="initResize($event, 'rt')"
@@ -26,7 +28,7 @@
         @mousedown="initResize($event, 'br')"
         class="resizer bottom-right"
       ></div>
-    </div>
+    </div>-->
   </component>
   <Toolbar v-if="activated"></Toolbar>
 </template>
@@ -99,6 +101,9 @@ export default {
     },
     fullyResizable: {
       type: Boolean,
+    },
+    htmlType: {
+      type: String
     },
     type: {
       type: String

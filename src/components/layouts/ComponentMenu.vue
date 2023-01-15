@@ -82,11 +82,12 @@ export default {
   //box-shadow: -15px 0px 10px -15px #ccc;
   //box-shadow: 15px 0 5px -9px #ccc;
 
-  padding: 25px 8px 25px 8px;
+  //padding: 25px 8px 25px 8px;
   background-color: $secondary-color-30;
   position: fixed;
   top: 5rem;
   height: 100%;
+  max-width: 5rem;
 }
 .menu {
   //padding: 10px;
@@ -96,7 +97,7 @@ export default {
   /* grid-auto-rows: minmax(1px,68px);*/
 }
 .menu-item {
-  width: 80px;
+  width: 180px;
   margin: 10px;
   padding: 5px;
   margin: 1px;
@@ -108,18 +109,23 @@ export default {
   box-shadow: 0 0 10px #ccc;
 }
 .sub-menu-wrapper {
+  padding-top: 15px;
   //border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  padding-bottom: 25px;
+  //padding-bottom: 25px;
   //box-shadow: 15px 0px 10px -15px #ccc;
 }
 .sub-menu-toggle {
   margin-bottom: 15px;
   padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
+  color: #ccc;
+ // display: flex;
+ // justify-content: space-between;
+ // align-items: center;
+  //width: 90%;
   cursor: pointer;
+  &:hover {
+      color: $accent-color-accent-10;
+  }
 }
 .current-menu {
   position: absolute;
@@ -129,6 +135,6 @@ export default {
   height: 100%;
 }
 .active {
-  color: $accent-color-accent-10;
+  color: rgb(72, 72, 72);
 }
 </style>

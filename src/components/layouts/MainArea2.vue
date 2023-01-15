@@ -127,6 +127,7 @@ export default {
         classes: data.classes,
         uid: Math.random().toString(16).slice(2),
         active: false,
+        htmlType: data.htmlType,
         type: data.type,
         components: [],
       };
