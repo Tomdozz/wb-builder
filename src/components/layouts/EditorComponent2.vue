@@ -5,7 +5,6 @@ import LayoutComponent from "../editor-components/LayoutComponent.vue";*/
 
 import { h } from "vue";
 var getTree = function (data) {
-  console.log(data.htmlType)
   let childs = [];
   if (data.components) {
     data.components.forEach((c) => {
