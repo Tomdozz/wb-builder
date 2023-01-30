@@ -48,12 +48,11 @@
       </base-content-card>
       <base-content-card :collapsed="true">
         <template #title>
-          <span> Layout </span>
+          <span>Tune</span>
         </template>
         <template #actions>
           <div>layout setting</div>
-                    <padding></padding>
-
+          <padding></padding>
         </template>
       </base-content-card>
     </div>

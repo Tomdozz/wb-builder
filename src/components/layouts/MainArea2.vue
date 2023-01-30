@@ -21,6 +21,7 @@
         @close="this.toolboxOpen = false"
       />
     </div>
+    <div id="custom-styling"></div>
   </div>
 </template>
 
@@ -125,7 +126,7 @@ export default {
       return {
         name: data.name,
         classes: data.classes,
-        uid: Math.random().toString(16).slice(2),
+        uid: 'wb-' + Math.random().toString(16).slice(2),
         active: false,
         htmlType: data.htmlType,
         type: data.type,
