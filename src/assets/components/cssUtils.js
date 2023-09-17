@@ -14,24 +14,22 @@ function camelize(s) {
     .join("");
 }*/
 
-
-
-export function updateDomStyle(styleTagId, cssString, elemetId){
-    let styleEl = document.getElementById(
-        styleTagId
-      );
-      if (!styleEl) {
-        styleEl = document.createElement("style");
-        styleEl.type = "text/css";
-        styleEl.id = styleTagId;
-        document.head.appendChild(styleEl);
-      }
-      document
-        .getElementById(elemetId)
-        .setAttribute(elemetId, "");
-    //set attribute just to have it for later just to specify further
-        //something like .editor > [id]{}
-      styleEl.innerHTML = `#${elemetId} ${cssString}`;
+/**Take a string of css that gets added to the dom
+ * NOTE: cssString have to be formated in a way that selector is on one line,
+ * rules are one line each, and last bracket is on own line
+ */
+export function updateDomStyle(styleTagId, cssString, elemetId) {
+  let styleEl = document.getElementById(styleTagId);
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.type = "text/css";
+    styleEl.id = styleTagId;
+    document.head.appendChild(styleEl);
+  }
+  document.getElementById(elemetId).setAttribute(elemetId, "");
+  //set attribute just to have it for later just to specify further
+  //something like .editor > [id]{}
+  styleEl.innerHTML = `#${elemetId} ${cssString}`;
 }
 
 export function generateJSONFromCSS(styleTagId, defaultObject) {

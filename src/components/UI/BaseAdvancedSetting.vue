@@ -43,7 +43,7 @@
         </template>
         <template #actions>
           <div>layout setting</div>
-          <base-setting></base-setting>
+          <margin></margin>
         </template>
       </base-content-card>
       <base-content-card :collapsed="true">
@@ -60,13 +60,13 @@
 </template>
 <script>
 import BaseContentCard from "../UI/BaseContentCard.vue";
-import BaseSetting from "./BaseSetting.vue";
 import Padding from "./Padding.vue"
+import Margin from "./Margin.vue"
 
 export default {
   components: {
     BaseContentCard,
-    BaseSetting,
+    Margin,
     Padding
   },
   data() {

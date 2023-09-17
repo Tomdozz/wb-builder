@@ -2,6 +2,7 @@
   <div class="main-editor" id="main-zone">
     <div
       class="drop-zone"
+      id="drop-zone-id"
       ref="container"
       @drop="onDrop($event)"
       @dragenter.prevent

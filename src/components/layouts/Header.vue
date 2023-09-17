@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
     <div class="actions">
       <base-button type="ghost"><h5>Preview</h5></base-button>
-      <base-button type="stroke"><h5>Export</h5></base-button>
+      <base-button @click="exportDom" type="stroke"><h5>Export</h5></base-button>
       <base-button type="fill"><h5>Save</h5></base-button>
     </div>
   </header>
@@ -16,6 +16,13 @@ export default {
     BaseButton
   },
   props: ["title"],
+  methods: {
+    exportDom(){
+      var html = document.getElementById('drop-zone-id').innerHTML;
+      html = html.replace(/<!--.*?-->/sg, "")
+      console.log(html);
+    }
+  }
 };
 </script>
 

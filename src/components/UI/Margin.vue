@@ -5,24 +5,24 @@
         <span>Top</span>
         <div class="input-warpper">
           <input
-            v-model="data.paddingTop.val"
+            v-model="data.marginTop.val"
             type="text"
             class="text"
             @change="update"
           />
-          <span> {{ data.paddingTop.unit }}</span>
+          <span> {{ data.marginTop.unit }}</span>
         </div>
       </div>
       <div class="box">
         <span>Right</span>
         <div class="input-warpper">
           <input
-            v-model="data.paddingRight.val"
+            v-model="data.marginRight.val"
             type="text"
             class="text"
             @change="update"
           />
-          <span> {{ data.paddingRight.unit }}</span>
+          <span> {{ data.marginRight.unit }}</span>
         </div>
       </div>
     </div>
@@ -31,24 +31,24 @@
         <span>Bottom</span>
         <div class="input-warpper">
           <input
-            v-model="data.paddingBottom.val"
+            v-model="data.marginBottom.val"
             type="text"
             class="text"
             @change="update"
           />
-          <span> {{ data.paddingBottom.unit }}</span>
+          <span> {{ data.marginBottom.unit }}</span>
         </div>
       </div>
       <div class="box">
         <span>Left</span>
         <div class="input-warpper">
           <input
-            v-model="data.paddingLeft.val"
+            v-model="data.marginLeft.val"
             type="text"
             class="text"
             @change="update"
           />
-          <span> {{ data.paddingLeft.unit }}</span>
+          <span> {{ data.marginLeft.unit }}</span>
         </div>
       </div>
     </div>
@@ -76,19 +76,19 @@ export default {
   data() {
     return {
       data: {
-        paddingTop: {
+        marginTop: {
           val: 1,
           unit: "px",
         },
-        paddingBottom: {
+        marginBottom: {
           val: 1,
           unit: "px",
         },
-        paddingLeft: {
+        marginLeft: {
           val: 1,
           unit: "px",
         },
-        paddingRight: {
+        marginRight: {
           val: 1,
           unit: "px",
         },
@@ -98,12 +98,12 @@ export default {
   watch: {
     currentelement() {
       this.data = generateJSONFromCSS(
-        "dynamic-style-padding-" + this.currentelement,
+        "dynamic-style-margin-" + this.currentelement,
         {
-          paddingTop: { val: 1, unit: "px" },
-          paddingBottom: { val: 1, unit: "px" },
-          paddingLeft: { val: 1, unit: "px" },
-          paddingRight: { val: 1, unit: "px" },
+          marginTop: { val: 1, unit: "px" },
+          marginBottom: { val: 1, unit: "px" },
+          marginLeft: { val: 1, unit: "px" },
+          marginRight: { val: 1, unit: "px" },
         }
       );
     },
@@ -111,14 +111,14 @@ export default {
   methods: {
     update() {
       let cssString = `{
-        padding-top:${this.data.paddingTop.val}${this.data.paddingTop.unit};
-        padding-bottom:${this.data.paddingBottom.val}${this.data.paddingBottom.unit};
-        padding-left:${this.data.paddingLeft.val}${this.data.paddingLeft.unit};
-        padding-right:${this.data.paddingRight.val}${this.data.paddingRight.unit};
+        margin-top:${this.data.marginTop.val}${this.data.marginTop.unit};
+        margin-bottom:${this.data.marginBottom.val}${this.data.marginBottom.unit};
+        margin-left:${this.data.marginLeft.val}${this.data.marginLeft.unit};
+        margin-right:${this.data.marginRight.val}${this.data.marginRight.unit};
       }`;
 
       updateDomStyle(
-        "dynamic-style-padding-" + this.currentelement,
+        "dynamic-style-margin-" + this.currentelement,
         cssString,
         this.currentelement
       );
