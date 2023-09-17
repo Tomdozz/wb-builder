@@ -9,6 +9,7 @@ const componentMenu = [
         name: "Row",
         htmlType: "div",
         type: "regular",
+        fullyResizable: true,
         classes: [
           {
             name: "grid-x",
@@ -22,6 +23,7 @@ const componentMenu = [
             name: "Cell",
             htmlType: "div",
             type: "regular",
+            fullyResizable: true,
             classes: [
               {
                 name: "cell",
@@ -45,6 +47,7 @@ const componentMenu = [
         name: "Row",
         htmlType: "div",
         type: "regular",
+        fullyResizable: true,
         classes: [
           {
             name: "grid-x",
@@ -58,6 +61,7 @@ const componentMenu = [
             name: "Cell",
             htmlType: "div",
             type: "regular",
+            fullyResizable: true,
             classes: [
               {
                 name: "cell",
@@ -68,6 +72,7 @@ const componentMenu = [
                 name: "ballzdeep",
                 htmlType: "span",
                 type: "regular",
+                fullyResizable: true,
                 classes: [
                   {
                     name: "ballz",
@@ -80,6 +85,7 @@ const componentMenu = [
             name: "Cell",
             htmlType: "div",
             type: "regular",
+            fullyResizable: true,
             classes: [
               {
                 name: "cell",

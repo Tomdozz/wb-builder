@@ -6,7 +6,7 @@
     :id="uid"
     :class="[uid, classes]"
     :builder-type="type"
-    :contentEditable="type === 'text' ? true: false"
+    :contentEditable="type === 'text' ? true : false"
     class="drop-el"
     ref="container"
     @drop="onDrop($event, this)"
@@ -14,7 +14,7 @@
     @click.self="toggleActive($event)"
   >
     <slot></slot>
-    <!--<div v-if="activated" class="resizers">
+    <div v-if="activated" class="resizers">
       <div @mousedown="initResize($event, 'tl')" class="resizer top-left"></div>
       <div
         @mousedown="initResize($event, 'rt')"
@@ -28,7 +28,7 @@
         @mousedown="initResize($event, 'br')"
         class="resizer bottom-right"
       ></div>
-    </div>-->
+    </div>
   </component>
   <Toolbar v-if="activated"></Toolbar>
 </template>
@@ -103,11 +103,11 @@ export default {
       type: Boolean,
     },
     htmlType: {
-      type: String
+      type: String,
     },
     type: {
-      type: String
-    }
+      type: String,
+    },
   },
 
   computed: {
@@ -152,6 +152,7 @@ export default {
     resizer(e) {
       if (this.disableWidthResizer) {
         if (this.currentresiser === "bl" || this.currentresiser === "br") {
+          console.log("only hight");
           const width = this.original_width + (e.pageX - this.original_mouse_x);
           const height =
             this.original_height + (e.pageY - this.original_mouse_y);
@@ -163,6 +164,8 @@ export default {
           }
         }
       } else {
+        const el = this.$refs.container;
+
         if (this.currentresiser === "br") {
           const width = this.original_width + (e.pageX - this.original_mouse_x);
           const height =
@@ -174,9 +177,10 @@ export default {
             this.height = height;
           }
         } else if (this.currentresiser === "bl") {
-          const width = this.original_width - (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height + (e.pageY - this.original_mouse_y);
+          const width = el.offsetWidth - (e.pageX - this.original_mouse_x);
+          const height = el.offsetHeight + (e.pageY - this.original_mouse_y);
+            console.log("bottom left: width: " + width);
+            console.log("bottom left: heigh: " + height);
           if (width > this.minimum_size) {
             this.width = width;
             this.left = this.original_x + (e.pageX - this.original_mouse_x);
@@ -233,7 +237,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../../public/css/variables.scss';
+@import "../../../public/css/variables.scss";
 /*.columns {
   display: flex;
 }*/
@@ -242,10 +246,10 @@ export default {
   /*position: relative;*/
   padding: 5px;
   min-height: 80px;
+  position: relative;
 }
-.drop-el:hover{
-    border: 1px solid $accent-color-accent-10;
-
+.drop-el:hover {
+  border: 1px solid $accent-color-accent-10;
 }
 .wrapper {
   position: relative;
@@ -276,23 +280,23 @@ export default {
 }
 
 .resizers .resizer.top-left {
-  left: -5px;
-  top: -5px;
+  left: 5px;
+  top: 5px;
   cursor: nwse-resize; /*resizer cursor*/
 }
 .resizers .resizer.top-right {
-  right: -5px;
-  top: -5px;
+  right: 5px;
+  top: 5px;
   cursor: nesw-resize;
 }
 .resizers .resizer.bottom-left {
-  left: -5px;
-  bottom: -5px;
+  left: 5px;
+  bottom: 5px;
   cursor: nesw-resize;
 }
 .resizers .resizer.bottom-right {
-  right: -5px;
-  bottom: -5px;
+  right: 5px;
+  bottom: 5px;
   cursor: nwse-resize;
 }
 </style>

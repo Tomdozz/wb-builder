@@ -132,6 +132,7 @@ export default {
         htmlType: data.htmlType,
         type: data.type,
         components: [],
+        fullyResizable: data.fullyResizable
       };
     },
     onDropNested(data) {

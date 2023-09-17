@@ -3,8 +3,9 @@
     <the-header title="LifeArray" />
     <div class="editor-layout">
       <!--<main-editor/>-->
-      <component-menu />
+     
       <main-area></main-area>
+       <component-menu />
       <!--<website-builder/>-->
     </div>
   </div>
