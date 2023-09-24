@@ -15,20 +15,29 @@
   >
     <slot></slot>
     <div v-if="activated" class="resizers">
-      <div @mousedown="initResize($event, 'tl')" class="resizer top-left"></div>
+      <div @mousedown="initResize($event, 'top')" class="resizer top"></div>
+      <div @mousedown="initResize($event, 'right')" class="resizer right"></div>
+      <div
+        @mousedown="initResize($event, 'bottom')"
+        class="resizer bottom"
+      ></div>
+      <div @mousedown="initResize($event, 'left')" class="resizer left"></div>
+    </div>
+    <!-- <div v-if="activated" class="resize-handles">
+      <div @mousedown="initResize($event, 'tl')" class="handle"></div>
       <div
         @mousedown="initResize($event, 'rt')"
-        class="resizer top-right"
+        class="handle"
       ></div>
       <div
         @mousedown="initResize($event, 'bl')"
-        class="resizer bottom-left"
+        class="handle"
       ></div>
       <div
         @mousedown="initResize($event, 'br')"
-        class="resizer bottom-right"
+        class="handle"
       ></div>
-    </div>
+    </div> -->
   </component>
   <Toolbar v-if="activated"></Toolbar>
 </template>
@@ -116,14 +125,14 @@ export default {
       return this.uid == this.currentelement;
     },
     computedStyle() {
-      return null;
-      /*return {
+      //return null;
+      return {
         height: this.height + "px",
         width: this.width + "px",
         top: this.top + "px",
         left: this.left + "px",
-        position: this.fullyResizable ? "absolute" : "relative",
-      };*/
+        //position: this.fullyResizable ? "absolute" : "relative",
+      };
     },
     classData() {
       return this.classes;
@@ -150,6 +159,21 @@ export default {
       window.addEventListener("mouseup", this.stopResize);
     },
     resizer(e) {
+      e.preventDefault();
+      if (this.disableWidthResizer) {
+        console.log("disable width");
+      } else {
+        const el = this.$refs.container;
+        if (this.currentresiser === "bottom") {
+          console.log("bottom");
+                    const height = el.offsetHeight + (e.pageY - this.original_mouse_y);
+          console.log("bottom : heigh: " + height);
+          if (height > this.minimum_size) {
+            this.height = height;
+          }
+        }
+      }
+
       if (this.disableWidthResizer) {
         if (this.currentresiser === "bl" || this.currentresiser === "br") {
           console.log("only hight");
@@ -179,8 +203,8 @@ export default {
         } else if (this.currentresiser === "bl") {
           const width = el.offsetWidth - (e.pageX - this.original_mouse_x);
           const height = el.offsetHeight + (e.pageY - this.original_mouse_y);
-            console.log("bottom left: width: " + width);
-            console.log("bottom left: heigh: " + height);
+          console.log("bottom left: width: " + width);
+          console.log("bottom left: heigh: " + height);
           if (width > this.minimum_size) {
             this.width = width;
             this.left = this.original_x + (e.pageX - this.original_mouse_x);
@@ -279,24 +303,62 @@ export default {
   position: absolute;
 }
 
-.resizers .resizer.top-left {
-  left: 5px;
-  top: 5px;
+.resizers .resizer.top {
+  top: -5px;
+  left: calc(50% - 5px);
   cursor: nwse-resize; /*resizer cursor*/
 }
-.resizers .resizer.top-right {
-  right: 5px;
-  top: 5px;
+.resizers .resizer.right {
+  top: calc(50% - 5px);
+  right: -5px;
   cursor: nesw-resize;
 }
-.resizers .resizer.bottom-left {
-  left: 5px;
-  bottom: 5px;
+.resizers .resizer.bottom {
+  bottom: -5px;
+  left: calc(50% - 5px);
   cursor: nesw-resize;
 }
-.resizers .resizer.bottom-right {
-  right: 5px;
-  bottom: 5px;
+.resizers .resizer.left {
+  top: calc(50% - 5px);
+  left: -5px;
   cursor: nwse-resize;
+}
+
+.resize-handles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.handle {
+  width: 10px;
+  height: 10px;
+  background-color: #333;
+  cursor: pointer;
+}
+
+.handle:nth-child(1) {
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.handle:nth-child(2) {
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+}
+
+.handle:nth-child(3) {
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.handle:nth-child(4) {
+  top: 50%;
+  left: -5px;
+  transform: translateY(-50%);
 }
 </style>
