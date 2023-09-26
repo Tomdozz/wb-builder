@@ -132,7 +132,10 @@ export default {
         htmlType: data.htmlType,
         type: data.type,
         components: [],
-        fullyResizable: data.fullyResizable
+        fullyResizable: data.fullyResizable,
+        initWidth: data.initWidth,
+        initialHeigt: data.initialHeigt,
+        rezizers: data.rezizers
       };
     },
     onDropNested(data) {

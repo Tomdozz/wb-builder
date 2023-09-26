@@ -15,29 +15,27 @@
   >
     <slot></slot>
     <div v-if="activated" class="resizers">
-      <div @mousedown="initResize($event, 'top')" class="resizer top"></div>
-      <div @mousedown="initResize($event, 'right')" class="resizer right"></div>
       <div
-        @mousedown="initResize($event, 'bottom')"
+        v-if="shouldDisplayController('top')"
+        @mousedown="initResize1($event, 'top')"
+        class="resizer top"
+      ></div>
+      <div
+        v-if="shouldDisplayController('right')"
+        @mousedown="initResize1($event, 'right')"
+        class="resizer right"
+      ></div>
+      <div
+        v-if="shouldDisplayController('bottom')"
+        @mousedown="initResize1($event, 'bottom')"
         class="resizer bottom"
       ></div>
-      <div @mousedown="initResize($event, 'left')" class="resizer left"></div>
+      <div
+        v-if="shouldDisplayController('left')"
+        @mousedown="initResize1($event, 'left')"
+        class="resizer left"
+      ></div>
     </div>
-    <!-- <div v-if="activated" class="resize-handles">
-      <div @mousedown="initResize($event, 'tl')" class="handle"></div>
-      <div
-        @mousedown="initResize($event, 'rt')"
-        class="handle"
-      ></div>
-      <div
-        @mousedown="initResize($event, 'bl')"
-        class="handle"
-      ></div>
-      <div
-        @mousedown="initResize($event, 'br')"
-        class="handle"
-      ></div>
-    </div> -->
   </component>
   <Toolbar v-if="activated"></Toolbar>
 </template>
@@ -77,7 +75,9 @@ export default {
       original_mouse_x: 0,
       original_mouse_y: 0,
       currentresiser: "",
-      disableWidthResizer: !this.fullyResizable,
+
+      startX: 0,
+      startY: 0,
     };
   },
   props: {
@@ -117,6 +117,9 @@ export default {
     type: {
       type: String,
     },
+    rezizers: {
+      type: String,
+    },
   },
 
   computed: {
@@ -128,7 +131,7 @@ export default {
       //return null;
       return {
         height: this.height + "px",
-        width: this.width + "px",
+        width: this.width > -1 ? this.width + "px" : "",
         top: this.top + "px",
         left: this.left + "px",
         //position: this.fullyResizable ? "absolute" : "relative",
@@ -139,6 +142,9 @@ export default {
     },
   },
   methods: {
+    shouldDisplayController(controller) {
+      return this.rezizers.includes(controller);
+    },
     toggleActive(e) {
       console.log(e);
       this.store.setToolBoxPosition({ x: e.x, y: e.y });
@@ -158,88 +164,60 @@ export default {
       window.addEventListener("mousemove", this.resizer);
       window.addEventListener("mouseup", this.stopResize);
     },
+    initResize1(e, currentresiser) {
+      this.original_height = this.height;
+      this.currentresiser = currentresiser;
+
+      this.startX = e.clientX;
+      this.startY = e.clientY;
+      console.log(currentresiser);
+
+      window.addEventListener("mousemove", this.resizer);
+      window.addEventListener("mouseup", this.stopResize);
+    },
     resizer(e) {
       e.preventDefault();
-      if (this.disableWidthResizer) {
-        console.log("disable width");
-      } else {
-        const el = this.$refs.container;
-        if (this.currentresiser === "bottom") {
-          console.log("bottom");
-                    const height = el.offsetHeight + (e.pageY - this.original_mouse_y);
-          console.log("bottom : heigh: " + height);
-          if (height > this.minimum_size) {
-            this.height = height;
-          }
-        }
+      //const el = this.$refs.container;
+      const offsetX = e.clientX - this.startX;
+      const offsetY = e.clientY - this.startY;
+
+      let newWidth = this.width;
+      if (newWidth === -1) {
+        newWidth = this.$refs.container.clientWidth;
+      }
+      let newHeight = this.height;
+
+      if (this.currentresiser === "right") {
+        newWidth += offsetX;
+      } else if (this.currentresiser === "left") {
+        newWidth -= offsetX;
       }
 
-      if (this.disableWidthResizer) {
-        if (this.currentresiser === "bl" || this.currentresiser === "br") {
-          console.log("only hight");
-          const width = this.original_width + (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height + (e.pageY - this.original_mouse_y);
-          if (width > this.minimum_size) {
-            //element.style.width = width + 'px'
-          }
-          if (height > this.minimum_size) {
-            this.height = height;
-          }
-        }
-      } else {
-        const el = this.$refs.container;
-
-        if (this.currentresiser === "br") {
-          const width = this.original_width + (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height + (e.pageY - this.original_mouse_y);
-          if (width > this.minimum_size) {
-            this.width = width;
-          }
-          if (height > this.minimum_size) {
-            this.height = height;
-          }
-        } else if (this.currentresiser === "bl") {
-          const width = el.offsetWidth - (e.pageX - this.original_mouse_x);
-          const height = el.offsetHeight + (e.pageY - this.original_mouse_y);
-          console.log("bottom left: width: " + width);
-          console.log("bottom left: heigh: " + height);
-          if (width > this.minimum_size) {
-            this.width = width;
-            this.left = this.original_x + (e.pageX - this.original_mouse_x);
-          }
-          if (height > this.minimum_size) {
-            this.height = height;
-          }
-        } else if (this.currentresiser === "tr") {
-          const width = this.original_width + (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height - (e.pageY - this.original_mouse_y);
-          if (width > this.minimum_size) {
-            this.width = width;
-          }
-          if (height > this.minimum_size) {
-            this.height = height;
-            this.top = this.original_y + (e.pagey - this.original_mouse_y);
-          }
-        } else {
-          const width = this.original_width - (e.pageX - this.original_mouse_x);
-          const height =
-            this.original_height - (e.pageY - this.original_mouse_y);
-          if (width > this.minimum_size) {
-            this.width = width;
-            this.left = this.original_x + (e.pageX - this.original_mouse_x);
-          }
-          if (height > this.minimum_size) {
-            this.height = height;
-            this.top = this.original_y + (e.pagey - this.original_mouse_y);
-          }
-        }
+      if (this.currentresiser === "bottom") {
+        newHeight += offsetY;
+      } else if (this.currentresiser === "top") {
+        newHeight -= offsetY;
       }
+      console.log("new height: " + newHeight);
+      console.log("new width: " + newWidth);
+      // const containerWidth = this.$refs.container.clientWidth;
+      // const containerHeight = this.$refs.container.clientHeight;
+
+      // if (newWidth > containerWidth) {
+      //   newWidth = containerWidth;
+      // }
+      // if (newHeight > containerHeight) {
+      //   newHeight = containerHeight;
+      // }
+
+      this.width = Math.max(newWidth, 0);
+      this.height = Math.max(newHeight, 0);
+      this.startX = e.clientX;
+      this.startY = e.clientY;
     },
     stopResize() {
       window.removeEventListener("mousemove", this.resizer);
+      this.currentresiser = null;
     },
     onDrop(event, target) {
       console.log({

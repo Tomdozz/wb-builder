@@ -24,6 +24,9 @@ const componentMenu = [
             htmlType: "div",
             type: "regular",
             fullyResizable: true,
+            rezizers: "top,,bottom,",
+            initWidth: -1,
+            initialHeigt: 80,
             classes: [
               {
                 name: "cell",

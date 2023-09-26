@@ -17,7 +17,7 @@ var getTree = function (data) {
     classes.push(c.name);
   });
   let finalclass = classes.join(" ");
-  console.log(data)
+  console.log(data);
 
   let result = h(
     BaseComp,
@@ -29,7 +29,10 @@ var getTree = function (data) {
       htmlType: data.htmlType,
       type: data.type,
       class: finalclass,
-      fullyResizable: data.fullyResizable
+      fullyResizable: data.fullyResizable,
+      initWidth: data.initWidth,
+      initialHeigt: data.initialHeigt,
+      rezizers: data.rezizers,
       //on: this.$attrs,
     },
     childs
